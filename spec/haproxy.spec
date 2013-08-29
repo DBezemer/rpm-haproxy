@@ -8,7 +8,7 @@
 
 %define version 1.5
 %define dev_rel dev19
-%define release 1
+%define release 2
 
 Name: haproxy
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
@@ -31,8 +31,8 @@ Requires(preun): /sbin/service
 Requires(postun): /sbin/service
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires: pcre-devel
-Requires: pcre
+BuildRequires: pcre-devel openssl-devel
+Requires: pcre openssl
 Requires: setup >= 2.8.14-14
 
 %description
@@ -53,7 +53,7 @@ possibility not to expose fragile web servers to the net.
 use_regparm="USE_REGPARM=1"
 %endif
 
-make %{?_smp_mflags} CPU="generic" TARGET="linux26" USE_PCRE=1 ${use_regparm}
+make %{?_smp_mflags} CPU="generic" TARGET="linux26" USE_PCRE=1 USE_OPENSSL=1 ${use_regparm}
 
 pushd contrib/halog
 make halog
@@ -122,7 +122,10 @@ fi
 %exclude %{_sbindir}/haproxy-systemd-wrapper
 
 %changelog
-* Wed Aug 28 2013 Martijn Storck <martijn@bluerail.nl> - 1.5dev19-1
+* Wed Aug 29 2013 Martijn Storck <martijn@bluerail.nl> - 1.5dev19.2
+- Compile with OpenSSL support
+
+* Wed Aug 28 2013 Martijn Storck <martijn@bluerail.nl> - 1.5dev19.1
 - Update to haproxy 1.5-dev19
 
 * Tue Oct 02 2012 Ryan O'Hara <rohara@redhat.com> - 1.4.22-3
