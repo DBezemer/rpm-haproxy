@@ -7,7 +7,7 @@
 %define haproxy_datadir %{_datadir}/haproxy
 
 %define version 1.5
-%define dev_rel dev19
+%define dev_rel dev22
 %define release 2
 
 Name: haproxy
@@ -109,8 +109,7 @@ fi
 %doc examples/cttproxy-src.cfg
 %doc examples/haproxy.cfg
 %doc examples/tarpit.cfg
-%dir %{haproxy_datadir}
-%dir %{haproxy_datadir}/*
+%{haproxy_datadir}
 %dir %{haproxy_confdir}
 %config(noreplace) %{haproxy_confdir}/%{name}.cfg
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
@@ -122,7 +121,10 @@ fi
 %exclude %{_sbindir}/haproxy-systemd-wrapper
 
 %changelog
-* Wed Aug 29 2013 Martijn Storck <martijn@bluerail.nl> - 1.5dev19.2
+* Tue Feb 04 2014 Chris Schuld <chris@chrisschuld.com> - 1.5dev22
+- Update to haproxy 1.5-dev22
+
+* Thu Aug 29 2013 Martijn Storck <martijn@bluerail.nl> - 1.5dev19.2
 - Compile with OpenSSL support
 
 * Wed Aug 28 2013 Martijn Storck <martijn@bluerail.nl> - 1.5dev19.1
