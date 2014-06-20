@@ -6,19 +6,19 @@
 %define haproxy_confdir %{_sysconfdir}/haproxy
 %define haproxy_datadir %{_datadir}/haproxy
 
-%define version 1.5
-%define dev_rel dev25
-%define release 1 
+%define version 1.5.0
+#%define dev_rel dev25
+#%define release 1
 
 Name: haproxy
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 Version: %{version}
-Release: %{dev_rel}.%{release}
+Release: %{version}
 License: GPLv2+
-URL: http://haproxy.1wt.eu/
+URL: http://www.haproxy.org/
 Group: System Environment/Daemons
 
-Source0: http://haproxy.1wt.eu/download/1.5/src/devel/haproxy-%{version}-%{dev_rel}.tar.gz
+Source0: http://www.haproxy.org/download/1.5/src/haproxy-%{version}.tar.gz
 Source1: haproxy.init
 Source2: haproxy.cfg
 Source3: haproxy.logrotate
@@ -46,7 +46,7 @@ architectures very easy and riskless, while still offering the
 possibility not to expose fragile web servers to the net.
 
 %prep
-%setup -q -n %{name}-%{version}-%{dev_rel}
+%setup -q -n %{name}-%{version}
 
 %build
 %ifarch %ix86 x86_64
@@ -121,6 +121,9 @@ fi
 %exclude %{_sbindir}/haproxy-systemd-wrapper
 
 %changelog
+* Fri Jun 20 2014 Joseph Daigle <joseph@cridion.com> - 1.5.0
+- Update to haproxy 1.5.0
+
 * Mon May 12 2014 Jeff Palmer <jeff@palmerit.net> - 1.5dev25
 - Update to haproxy 1.5-dev25
 
