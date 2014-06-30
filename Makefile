@@ -12,12 +12,13 @@ download-upstream:
 	./download haproxy-${VERSION}.tar.gz http://www.haproxy.org/download/1.5/src/haproxy-${VERSION}.tar.gz
 
 build: clean download-upstream
-	cp -r ./SPECS/* ./rpmbuild/SPECS/
-	cp -r ./SOURCES/* ./rpmbuild/SOURCES/
+	mkdir -p ./SPECS/ ./SOURCES/
+	cp -r ./SPECS/* ./rpmbuild/SPECS/ || true
+	cp -r ./SOURCES/* ./rpmbuild/SOURCES/ || true
 	rpmbuild -ba SPECS/haproxy.spec \
-	--define "ver ${VERSION}" \
-	--define "rel ${RELEASE}" \
+	--define "version ${VERSION}" \
+	--define "release ${RELEASE}" \
 	--define "_topdir %(pwd)/rpmbuild" \
-    --define "_builddir %{_topdir}" \
-    --define "_rpmdir %{_topdir}" \
-    --define "_srcrpmdir %{_topdir}" \
+	--define "_builddir %{_topdir}" \
+	--define "_rpmdir %{_topdir}" \
+	--define "_srcrpmdir %{_topdir}" \
