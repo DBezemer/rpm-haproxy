@@ -16,8 +16,8 @@ Install rpmdevtools from the [EPEL][epel] repository:
 
 ## Download haproxy
 
-    wget http://www.haproxy.org/download/1.5/src/haproxy-1.5.0.tar.gz
-    mv haproxy-1.5.0.tar.gz ~/rpmbuild/SOURCES/
+    wget http://www.haproxy.org/download/1.6/src/haproxy-1.6.0.tar.gz
+    mv haproxy-1.6.0.tar.gz ~/rpmbuild/SOURCES/
 
 ## Get Necessary System-specific Configs
 
