@@ -72,7 +72,7 @@ fi
 
 %attr(0755,root,root) %{_sbindir}/%{name}
 %dir %{_sysconfdir}/%{name}
-%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/%{name}/%{name}.cfg
+#%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/%{name}/%{name}.cfg
 %attr(0755,root,root) %config %{_sysconfdir}/rc.d/init.d/%{name}
 
 %changelog
