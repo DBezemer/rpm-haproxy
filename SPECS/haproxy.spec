@@ -44,7 +44,7 @@ risking the system's stability.
 %{__install} -d %{buildroot}%{_mandir}/man1/
 
 %{__install} -s %{name} %{buildroot}%{_sbindir}/
-%{__install} -c -m 644 examples/%{name}.cfg %{buildroot}%{_sysconfdir}/%{name}/
+#%{__install} -c -m 644 examples/%{name}.cfg %{buildroot}%{_sysconfdir}/%{name}/
 %{__install} -c -m 755 examples/%{name}.init %{buildroot}%{_sysconfdir}/rc.d/init.d/%{name}
 %{__install} -c -m 755 doc/%{name}.1 %{buildroot}%{_mandir}/man1/
  
