@@ -68,7 +68,7 @@ risking the system's stability.
  
 %post
 /sbin/chkconfig --add %{name}
-/sbin/service rsyslog restart 2>/dev/null || :
+/sbin/service rsyslog restart >/dev/null 2>&1 || :
 
 %preun
 if [ $1 = 0 ]; then
@@ -79,6 +79,7 @@ fi
 %postun
 if [ "$1" -ge "1" ]; then
   /sbin/service %{name} condrestart >/dev/null 2>&1 || :
+  /sbin/service rsyslog restart >/dev/null 2>&1 || :
 fi
 
 %files
