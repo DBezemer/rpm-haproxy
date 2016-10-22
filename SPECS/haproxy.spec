@@ -1,13 +1,17 @@
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 Name: haproxy
-Version: 1.6.0
+Version: 1.6.9
 Release: 1
 License: GPL
 Group: System Environment/Daemons
-URL: http://haproxy.1wt.eu/
-Source0: http://haproxy.1wt.eu/download/1.5/src/devel/%{name}-%{version}.tar.gz
+URL: http://www.haproxy.org/
+Source0: http://www.haproxy.org/download/1.6/src/%{name}-%{version}.tar.gz
+Source1: haproxy.cfg
+Source2: haproxy.init
+Source3: haproxy.logrotate
+Source4: haproxy.syslog
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
-BuildRequires: pcre-devel
+BuildRequires: pcre-devel pcre-devel make gcc openssl-devel 
 Requires: /sbin/chkconfig, /sbin/service
 
 %description
@@ -33,23 +37,33 @@ risking the system's stability.
 %define __perl_requires /bin/true
 
 %build
-%{__make} USE_PCRE=1 DEBUG="" ARCH=%{_target_cpu} TARGET=linux26
+%{__make} TARGET=linux2628 ARCH=%{_target_cpu} USE_OPENSSL=1 USE_ZLIB=1 USE_PCRE=1
 
 %install
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
  
 %{__install} -d %{buildroot}%{_sbindir}
 %{__install} -d %{buildroot}%{_sysconfdir}/rc.d/init.d
+%{__install} -d %{buildroot}%{_sysconfdir}/logrotate.d
+%{__install} -d %{buildroot}%{_sysconfdir}/rsyslog.d
 %{__install} -d %{buildroot}%{_sysconfdir}/%{name}
+%{__install} -d %{buildroot}%{_sysconfdir}/%{name}/errors
 %{__install} -d %{buildroot}%{_mandir}/man1/
 
 %{__install} -s %{name} %{buildroot}%{_sbindir}/
-#%{__install} -c -m 644 examples/%{name}.cfg %{buildroot}%{_sysconfdir}/%{name}/
-%{__install} -c -m 755 examples/%{name}.init %{buildroot}%{_sysconfdir}/rc.d/init.d/%{name}
+%{__install} -c -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/%{name}/
+%{__install} -c -m 755 examples/errorfiles/*.http %{buildroot}%{_sysconfdir}/%{name}/errors/
+%{__install} -c -m 755 %{SOURCE2} %{buildroot}%{_sysconfdir}/rc.d/init.d/%{name}
+%{__install} -c -m 755 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
+%{__install} -c -m 755 %{SOURCE4} %{buildroot}%{_sysconfdir}/rsyslog.d/90-%{name}.conf
 %{__install} -c -m 755 doc/%{name}.1 %{buildroot}%{_mandir}/man1/
- 
+
 %clean
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
+
+%pre
+/usr/sbin/groupadd -g 188 -r haproxy 2>/dev/null || :
+/usr/sbin/useradd -u 188 -g haproxy -d /var/lib/haproxy -s /sbin/nologin -r haproxy 2>/dev/null || :
  
 %post
 /sbin/chkconfig --add %{name}
@@ -72,8 +86,11 @@ fi
 
 %attr(0755,root,root) %{_sbindir}/%{name}
 %dir %{_sysconfdir}/%{name}
-#%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/%{name}/%{name}.cfg
-%attr(0755,root,root) %config %{_sysconfdir}/rc.d/init.d/%{name}
+%{_sysconfdir}/%{name}/errors
+%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/%{name}/%{name}.cfg
+%attr(0644,root,root) %config %{_sysconfdir}/logrotate.d/%{name}
+%attr(0644,root,root) %config %{_sysconfdir}/rsyslog.d/90-%{name}.conf
+%attr(0755,root,root) %config %_sysconfdir/rc.d/init.d/%{name}
 
 %changelog
 * Tue Oct 13 2015 Willy Tarreau <w@1wt.eu>
