@@ -1,6 +1,10 @@
 $ModLoad imudp
-$UDPServerRun 514
 $UDPServerAddress 127.0.0.1
+$UDPServerRun 514
 
-local2.*     /var/log/haproxy/haproxy.log
-& ~
+$template TraditionalFormatWithPRI,"%pri-text%: %timegenerated% %syslogtag%%msg:::drop-last-lf%\n"
+
+local2.=info     /var/log/haproxy/access.log
+local2.=notice;local2.=warning    /var/log/haproxy/status.log;TraditionalFormatWithPRI
+local2.error    /var/log/haproxy/error.log;TraditionalFormatWithPRI
+local2.* ~

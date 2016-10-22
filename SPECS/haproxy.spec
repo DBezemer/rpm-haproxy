@@ -48,6 +48,7 @@ risking the system's stability.
 %{__install} -d %{buildroot}%{_sysconfdir}/rsyslog.d
 %{__install} -d %{buildroot}%{_sysconfdir}/%{name}
 %{__install} -d %{buildroot}%{_sysconfdir}/%{name}/errors
+%{__install} -d %{buildroot}%{_localstatedir}/log/%{name}
 %{__install} -d %{buildroot}%{_mandir}/man1/
 
 %{__install} -s %{name} %{buildroot}%{_sbindir}/
@@ -55,7 +56,7 @@ risking the system's stability.
 %{__install} -c -m 755 examples/errorfiles/*.http %{buildroot}%{_sysconfdir}/%{name}/errors/
 %{__install} -c -m 755 %{SOURCE2} %{buildroot}%{_sysconfdir}/rc.d/init.d/%{name}
 %{__install} -c -m 755 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
-%{__install} -c -m 755 %{SOURCE4} %{buildroot}%{_sysconfdir}/rsyslog.d/90-%{name}.conf
+%{__install} -c -m 755 %{SOURCE4} %{buildroot}%{_sysconfdir}/rsyslog.d/49-%{name}.conf
 %{__install} -c -m 755 doc/%{name}.1 %{buildroot}%{_mandir}/man1/
 
 %clean
@@ -67,6 +68,7 @@ risking the system's stability.
  
 %post
 /sbin/chkconfig --add %{name}
+/sbin/service rsyslog restart 2>/dev/null || :
 
 %preun
 if [ $1 = 0 ]; then
@@ -83,16 +85,23 @@ fi
 %defattr(-,root,root)
 %doc CHANGELOG README examples/*.cfg doc/architecture.txt doc/configuration.txt doc/intro.txt doc/management.txt doc/proxy-protocol.txt
 %doc %{_mandir}/man1/%{name}.1*
+%dir %{_localstatedir}/log/%{name}
 
 %attr(0755,root,root) %{_sbindir}/%{name}
 %dir %{_sysconfdir}/%{name}
 %{_sysconfdir}/%{name}/errors
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/%{name}/%{name}.cfg
 %attr(0644,root,root) %config %{_sysconfdir}/logrotate.d/%{name}
-%attr(0644,root,root) %config %{_sysconfdir}/rsyslog.d/90-%{name}.conf
+%attr(0644,root,root) %config %{_sysconfdir}/rsyslog.d/49-%{name}.conf
 %attr(0755,root,root) %config %_sysconfdir/rc.d/init.d/%{name}
 
 %changelog
+* Sat Oct 22 2016 David Bezemer <info@davidbezemer.nl>
+- reworked installation structure
+- included rsylog config for logging
+- copy default error files
+- updated to 1.6.9
+
 * Tue Oct 13 2015 Willy Tarreau <w@1wt.eu>
 - updated to 1.6.0
 
