@@ -25,5 +25,4 @@ build: install_prereq clean download-upstream
 	--define "_builddir %{_topdir}/BUILD" \
 	--define "_buildroot %{_topdir}/BUILDROOT" \
 	--define "_rpmdir %{_topdir}/RPMS" \
-	--define "_srcrpmdir %{_topdir}/SRPMS" \
-	--define "_smp_mflags -j $((`nproc` +1))"
+	--define "_srcrpmdir %{_topdir}/SRPMS"
