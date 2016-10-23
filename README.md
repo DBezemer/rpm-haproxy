@@ -12,30 +12,19 @@ Install rpmdevtools from the [EPEL][epel] repository:
 ## Install Prerequisites for RPM Creation
 
     sudo yum groupinstall 'Development Tools'
-    sudo yum install openssl-devel
 
-## Download haproxy
+## Checkout this repository
 
-    wget http://www.haproxy.org/download/1.6/src/haproxy-1.6.0.tar.gz
-    mv haproxy-1.6.0.tar.gz ~/rpmbuild/SOURCES/
+    cd /opt
+    git clone https://github.com/DBezemer/rpm-haproxy.git 
+    cd ./rpm-haproxy
 
-## Get Necessary System-specific Configs
-
-    git clone git://github.com/bluerail/haproxy-centos.git
-    cp haproxy-centos/conf/* ~/rpmbuild/SOURCES/
-    cp haproxy-centos/spec/* ~/rpmbuild/SPECS/
-
-## Build the RPM
-
-    cd ~/rpmbuild/
-    rpmbuild -ba SPECS/haproxy.spec
-
-The resulting RPM will be in ~/rpmbuild/RPMS/x86_64
+## Build using makefile
+    make
+    
+Resulting RPM will be in /opt/rpm-haproxy/rpmbuild/RPMS/
 
 ## Credits
 
-Based on the Red Hat 6.4 RPM spec for haproxy 1.4.
+Based on the Red Hat 6.4 RPM spec for haproxy 1.4 combined with work done by @nmilford @resmo and @kevholmes
 
-Maintained by [Martijn Storck](martijn@bluerail.nl)
-
-[EPEL]: http://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F
