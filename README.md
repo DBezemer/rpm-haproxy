@@ -1,13 +1,6 @@
-# A Recipe for a haproxy 1.5 stable version RPM on CentOS
+# A Recipe for a haproxy 1.6 stable version RPM on CentOS
 
 Perform the following on a build box as a regular user.
-
-## Create an RPM Build Environment
-
-Install rpmdevtools from the [EPEL][epel] repository:
-
-    sudo yum install rpmdevtools pcre-devel
-    rpmdev-setuptree
 
 ## Install Prerequisites for RPM Creation
 
