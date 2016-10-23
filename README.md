@@ -28,3 +28,4 @@ Resulting RPM will be in /opt/rpm-haproxy/rpmbuild/RPMS/
 
 Based on the Red Hat 6.4 RPM spec for haproxy 1.4 combined with work done by [@nmilford](https://www.github.com/nmilford) [@resmo](https://www.github.com/resmo) and [@kevholmes](https://www.github.com/kevholmes)
 
+Additional logging added based on https://www.percona.com/blog/2014/10/03/haproxy-give-me-some-logs-on-centos-6-5/
