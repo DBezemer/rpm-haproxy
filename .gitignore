@@ -1,2 +1,3 @@
 SOURCES/haproxy-*.tar.gz 
 rpmbuild
+RPMS
