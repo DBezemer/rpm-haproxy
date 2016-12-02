@@ -1,3 +1,5 @@
+[![Github All Releases](https://img.shields.io/github/downloads/atom/atom/total.svg?style=flat-square)]()
+
 # A Recipe for a haproxy 1.6 stable version RPM on CentOS
 
 Perform the following on a build box as a regular user.
