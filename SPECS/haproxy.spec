@@ -167,6 +167,9 @@ fi
 %attr(0644,root,root) %config %{_sysconfdir}/rsyslog.d/49-%{name}.conf
 
 %changelog
+* Sun Jan 15 2017 David Bezemer <info@davidbezemer.nl>
+- Update for HAproxy 1.6.11
+
 * Sun Oct 23 2016 David Bezemer <info@davidbezemer.nl>
 - Add systemd compatibility
 
