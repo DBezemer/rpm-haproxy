@@ -25,7 +25,7 @@ Source1: %{name}.cfg
 Source3: %{name}.logrotate
 Source4: %{name}.syslog%{?dist}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
-BuildRequires: pcre-devel pcre-devel make gcc openssl-devel 
+BuildRequires: pcre-devel make gcc openssl-devel 
 
 
 Requires(pre):      shadow-utils
