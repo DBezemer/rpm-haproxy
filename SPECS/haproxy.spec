@@ -25,7 +25,7 @@ Source1: %{name}.cfg
 Source3: %{name}.logrotate
 Source4: %{name}.syslog%{?dist}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
-BuildRequires: pcre-devel pcre-devel make gcc openssl-devel 
+BuildRequires: pcre-devel make gcc openssl-devel 
 
 
 Requires(pre):      shadow-utils
@@ -167,6 +167,10 @@ fi
 %attr(0644,root,root) %config %{_sysconfdir}/rsyslog.d/49-%{name}.conf
 
 %changelog
+* Thu Jun 08 2017 David Bezemer <info@davidbezemer.nl>
+- Update for HAproxy 1.7.5
+- Remove duplicate pcre-devel requirement
+
 * Sun Jan 15 2017 David Bezemer <info@davidbezemer.nl>
 - Update for HAproxy 1.7.2
 
