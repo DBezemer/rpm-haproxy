@@ -167,6 +167,9 @@ fi
 %attr(0644,root,root) %config %{_sysconfdir}/rsyslog.d/49-%{name}.conf
 
 %changelog
+* Mon Jul 31 2017 David Bezemer <info@davidbezemer.nl>
+- Update for HAproxy 1.7.8
+
 * Thu Jun 08 2017 David Bezemer <info@davidbezemer.nl>
 - Update for HAproxy 1.7.5
 - Remove duplicate pcre-devel requirement
