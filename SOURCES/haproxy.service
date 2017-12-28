@@ -1,11 +1,14 @@
 [Unit]
 Description=HAProxy Load Balancer
 After=syslog.target network.target
+Documentation=man:haproxy(1)
 
 [Service]
-ExecStart=/usr/sbin/haproxy-systemd-wrapper -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid
+ExecStart=/usr/sbin/haproxy -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid
 ExecReload=/bin/kill -USR2 $MAINPID
 KillMode=mixed
+PIDFile=/var/run/haproxy.pid
+Type=forking
 
 [Install]
 WantedBy=multi-user.target

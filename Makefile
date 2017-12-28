@@ -1,6 +1,6 @@
 HOME=$(shell pwd)
-MAINVERSION=1.7
-VERSION=1.7.8
+MAINVERSION=1.8
+VERSION=1.8.2
 RELEASE=1
 
 all: build
