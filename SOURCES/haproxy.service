@@ -7,7 +7,6 @@ Documentation=man:haproxy(1)
 ExecStart=/usr/sbin/haproxy -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid
 ExecReload=/bin/kill -USR2 $MAINPID
 KillMode=mixed
-PIDFile=/var/run/haproxy.pid
 Type=forking
 
 [Install]
