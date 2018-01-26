@@ -25,8 +25,7 @@ Source1: %{name}.cfg
 Source3: %{name}.logrotate
 Source4: %{name}.syslog%{?dist}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
-BuildRequires: pcre-devel make gcc openssl-devel 
-
+BuildRequires: pcre-devel make gcc openssl-devel systemd-devel
 
 Requires(pre):      shadow-utils
 
@@ -71,7 +70,13 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}" DEFINE=-DTCP_USER_TIMEOUT=18
+%if 0%{?el7}
+systemd_opts="USE_SYSTEMD=1"
+%else
+systemd_opts=
+%endif
+
+%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" ${systemd_opts} USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}" DEFINE=-DTCP_USER_TIMEOUT=18
 
 %install
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
