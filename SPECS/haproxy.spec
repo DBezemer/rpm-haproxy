@@ -25,7 +25,7 @@ Source1: %{name}.cfg
 Source3: %{name}.logrotate
 Source4: %{name}.syslog%{?dist}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
-BuildRequires: pcre-devel make gcc openssl-devel systemd-devel
+BuildRequires: pcre-devel make gcc openssl-devel
 
 Requires(pre):      shadow-utils
 
@@ -36,7 +36,7 @@ Requires(postun):   initscripts
 %endif
 
 %if 0%{?el7}
-BuildRequires:      systemd-units
+BuildRequires:      systemd-units systemd-devel
 Requires(post):     systemd
 Requires(preun):    systemd
 Requires(postun):   systemd
