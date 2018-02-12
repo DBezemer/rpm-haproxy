@@ -18,15 +18,14 @@ Release: %{release}%{?dist}
 License: GPL
 Group: System Environment/Daemons
 URL: http://www.haproxy.org/
-Source0: http://www.haproxy.org/download/1.6/src/%{name}-%{version}.tar.gz
+Source0: http://www.haproxy.org/download/1.8/src/%{name}-%{version}.tar.gz
 Source1: %{name}.cfg
 %{?el6:Source2: %{name}.init}
 %{?el7:Source2: %{name}.service}
 Source3: %{name}.logrotate
 Source4: %{name}.syslog%{?dist}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
-BuildRequires: pcre-devel make gcc openssl-devel 
-
+BuildRequires: pcre-devel make gcc openssl-devel systemd-devel
 
 Requires(pre):      shadow-utils
 
@@ -71,7 +70,13 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}" DEFINE=-DTCP_USER_TIMEOUT=18
+%if 0%{?el7}
+systemd_opts="USE_SYSTEMD=1"
+%else
+systemd_opts=
+%endif
+
+%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" ${systemd_opts} USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}" DEFINE=-DTCP_USER_TIMEOUT=18
 
 %install
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
@@ -90,7 +95,7 @@ regparm_opts="USE_REGPARM=1"
 %{__install} -c -m 755 %{SOURCE2} %{buildroot}%{_sysconfdir}/rc.d/init.d/%{name}
 %endif    
 %if 0%{?el7}
-%{__install} -s %{name}-systemd-wrapper %{buildroot}%{_sbindir}/
+%{__install} -s %{name} %{buildroot}%{_sbindir}/
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
 %endif
 %{__install} -c -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/%{name}/
@@ -157,7 +162,7 @@ fi
 %attr(0755,root,root) %config %_sysconfdir/rc.d/init.d/%{name}
 %endif    
 %if 0%{?el7}
-%attr(0755,root,root) %{_sbindir}/%{name}-systemd-wrapper
+%attr(0755,root,root) %{_sbindir}/%{name}
 %attr(-,root,root) %{_unitdir}/%{name}.service
 %endif
 %dir %{_sysconfdir}/%{name}

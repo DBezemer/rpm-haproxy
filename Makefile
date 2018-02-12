@@ -1,12 +1,12 @@
 HOME=$(shell pwd)
-MAINVERSION=1.7
-VERSION=1.7.8
+MAINVERSION=1.8
+VERSION=1.8.3
 RELEASE=1
 
 all: build
 
 install_prereq:
-	sudo yum install -y pcre-devel pcre-devel make gcc openssl-devel rpm-build
+	sudo yum install -y pcre-devel pcre-devel make gcc openssl-devel rpm-build systemd-devel
 
 clean:
 	rm -f ./SOURCES/haproxy-${VERSION}.tar.gz
@@ -14,7 +14,7 @@ clean:
 	mkdir -p ./rpmbuild/SPECS/ ./rpmbuild/SOURCES/ ./rpmbuild/RPMS/ ./rpmbuild/SRPMS/
 
 download-upstream:
-	wget http://www.haproxy.org/download/${MAINVERSION}/src/haproxy-${VERSION}.tar.gz -O ./SOURCES/haproxy-${VERSION}.tar.gz 
+	wget http://www.haproxy.org/download/${MAINVERSION}/src/haproxy-${VERSION}.tar.gz -O ./SOURCES/haproxy-${VERSION}.tar.gz
 
 build: install_prereq clean download-upstream
 	cp -r ./SPECS/* ./rpmbuild/SPECS/ || true
