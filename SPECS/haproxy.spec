@@ -30,13 +30,7 @@ BuildRequires: pcre-devel make gcc openssl-devel
 
 Requires(pre):      shadow-utils
 
-%if 0%{?amzn1}
-Requires(post):     chkconfig, initscripts
-Requires(preun):    chkconfig, initscripts
-Requires(postun):   initscripts
-%endif
-
-%if 0%{?el6}
+%if 0%{?el6} || 0%{?amzn1}
 Requires(post):     chkconfig, initscripts
 Requires(preun):    chkconfig, initscripts
 Requires(postun):   initscripts
@@ -97,11 +91,7 @@ systemd_opts=
 %{__install} -d %{buildroot}%{_mandir}/man1/
 
 %{__install} -s %{name} %{buildroot}%{_sbindir}/
-%if 0%{?amzn1}
-%{__install} -d %{buildroot}%{_sysconfdir}/rc.d/init.d
-%{__install} -c -m 755 %{SOURCE2} %{buildroot}%{_sysconfdir}/rc.d/init.d/%{name}
-%endif
-%if 0%{?el6}
+%if 0%{?el6} || 0%{?amzn1}
 %{__install} -d %{buildroot}%{_sysconfdir}/rc.d/init.d
 %{__install} -c -m 755 %{SOURCE2} %{buildroot}%{_sysconfdir}/rc.d/init.d/%{name}
 %endif
@@ -132,12 +122,7 @@ exit 0
 systemctl restart rsyslog.service
 %endif
 
-%if 0%{?el6}
-/sbin/chkconfig --add %{name}
-/sbin/service rsyslog restart >/dev/null 2>&1 || :
-%endif
-
-%if 0%{?amzn1}
+%if 0%{?el6} || 0%{?amzn1}
 /sbin/chkconfig --add %{name}
 /sbin/service rsyslog restart >/dev/null 2>&1 || :
 %endif
@@ -147,20 +132,12 @@ systemctl restart rsyslog.service
 %systemd_preun %{name}.service
 %endif
 
-%if 0%{?el6}
+%if 0%{?el6} || 0%{?amzn1}
 if [ $1 = 0 ]; then
   /sbin/service %{name} stop >/dev/null 2>&1 || :
   /sbin/chkconfig --del %{name}
 fi
 %endif
-
-%if 0%{?amzn1}
-if [ $1 = 0 ]; then
-  /sbin/service %{name} stop >/dev/null 2>&1 || :
-  /sbin/chkconfig --del %{name}
-fi
-%endif
-
 
 %postun
 %if 0%{?el7}
@@ -168,14 +145,7 @@ fi
 systemctl restart rsyslog.service
 %endif
 
-%if 0%{?el6}
-if [ "$1" -ge "1" ]; then
-  /sbin/service %{name} condrestart >/dev/null 2>&1 || :
-  /sbin/service rsyslog restart >/dev/null 2>&1 || :
-fi
-%endif
-
-%if 0%{?amzn1}
+%if 0%{?el6} || 0%{?amzn1}
 if [ "$1" -ge "1" ]; then
   /sbin/service %{name} condrestart >/dev/null 2>&1 || :
   /sbin/service rsyslog restart >/dev/null 2>&1 || :
