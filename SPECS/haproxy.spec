@@ -159,10 +159,7 @@ fi
 %dir %{_localstatedir}/log/%{name}
 
 %attr(0755,root,root) %{_sbindir}/%{name}
-%if 0%{?amzn1}
-%attr(0755,root,root) %config %_sysconfdir/rc.d/init.d/%{name}
-%endif
-%if 0%{?el6}
+%if 0%{?el6} || 0%{?amzn1}
 %attr(0755,root,root) %config %_sysconfdir/rc.d/init.d/%{name}
 %endif
 %if 0%{?el7}
@@ -178,6 +175,12 @@ fi
 %changelog
 * Fri Feb 23 2018 J. Casalino <casalino@adobe.com>
 - Add support for Amazon Linux (Fedora-based)
+
+* Mon Feb 12 2018 David Bezemer <info@davidbezemer.nl>
+- Update to HAproxy 1.8.4
+
+* Fri Jan 26 2018 Kamil Herbik <kamil.herbik@rst.com.pl>
+- Update for HAproxy 1.8
 
 * Mon Jul 31 2017 David Bezemer <info@davidbezemer.nl>
 - Update for HAproxy 1.7.8
