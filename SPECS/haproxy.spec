@@ -77,7 +77,7 @@ systemd_opts="USE_SYSTEMD=1"
 systemd_opts=
 %endif
 
-%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" ${systemd_opts} USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}" DEFINE=-DTCP_USER_TIMEOUT=18
+%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" ${systemd_opts} USE_OPENSSL=1 USE_PCRE=1 USE_PCRE_JIT=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}" DEFINE=-DTCP_USER_TIMEOUT=18
 
 %install
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
@@ -173,6 +173,9 @@ fi
 %attr(0644,root,root) %config %{_sysconfdir}/rsyslog.d/49-%{name}.conf
 
 %changelog
+* Thu May 18 2018 David Bezemer <info@davidbezemer.nl>
+- Update to HAproxy 1.8.8
+
 * Fri Feb 23 2018 J. Casalino <casalino@adobe.com>
 - Add support for Amazon Linux (Fedora-based)
 
