@@ -5,7 +5,7 @@ After=syslog.target network.target
 
 [Service]
 EnvironmentFile=-/etc/sysconfig/haproxy
-Environment="CONFIG=/etc/haproxy/haproxy.cfg" "PIDFILE=/var/run/haproxy.pid"
+Environment="CONFIG=/etc/haproxy" "PIDFILE=/var/run/haproxy.pid"
 ExecStartPre=/usr/sbin/haproxy -f $CONFIG -c -q
 ExecStart=/usr/sbin/haproxy -Ws -f $CONFIG -p $PIDFILE
 ExecReload=/usr/sbin/haproxy -f $CONFIG -c -q
