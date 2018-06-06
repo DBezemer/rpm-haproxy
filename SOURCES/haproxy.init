@@ -34,7 +34,7 @@ fi
 
 BIN=/usr/sbin/$BASENAME
 
-CFG=/etc/$BASENAME/$BASENAME.cfg
+CFG=/etc/$BASENAME
 [ -f $CFG ] || exit 1
 
 PIDFILE=/var/run/$BASENAME.pid
