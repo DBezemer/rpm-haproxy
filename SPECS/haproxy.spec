@@ -173,6 +173,9 @@ fi
 %attr(0644,root,root) %config %{_sysconfdir}/rsyslog.d/49-%{name}.conf
 
 %changelog
+* Fri June 29 2018 Topher Cullen <topher@shawlite.com>
+- Update to HAproxy 1.8.12
+
 * Thu May 18 2018 David Bezemer <info@davidbezemer.nl>
 - Update to HAproxy 1.8.8
 
