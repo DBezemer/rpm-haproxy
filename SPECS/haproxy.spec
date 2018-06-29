@@ -175,6 +175,7 @@ fi
 %changelog
 * Fri June 29 2018 Topher Cullen <topher@shawlite.com>
 - Update to HAproxy 1.8.12
+- Add support for Amazon Linux 2
 
 * Thu May 18 2018 David Bezemer <info@davidbezemer.nl>
 - Update to HAproxy 1.8.8
