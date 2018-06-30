@@ -71,13 +71,15 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%if 0%{?el7}
+%if 0%{?el7} || 0%{?amzn2}
 systemd_opts="USE_SYSTEMD=1"
+pcre_opts="USE_PCRE=1 USE_PCRE_JIT=1"
 %else
 systemd_opts=
+pcre_opts="USE_PCRE=1"
 %endif
 
-%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" ${systemd_opts} USE_OPENSSL=1 USE_PCRE=1 USE_PCRE_JIT=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}" DEFINE=-DTCP_USER_TIMEOUT=18
+%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}" DEFINE=-DTCP_USER_TIMEOUT=18
 
 %install
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
