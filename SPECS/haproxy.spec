@@ -2,7 +2,7 @@
 %define haproxy_group   %{haproxy_user}
 %define haproxy_home    %{_localstatedir}/lib/haproxy
 
-%if 0%{?rhel} == 7
+%if 0%{?rhel} == 7 && 0%{!?amzn2}
     # CentOS 7 forces ".el7.centos", wtf CentOS maintainers...
     %define dist .el7
 %endif
@@ -36,7 +36,7 @@ Requires(preun):    chkconfig, initscripts
 Requires(postun):   initscripts
 %endif
 
-%if 0%{?el7}
+%if 0%{?el7} || 0%{?amzn2}
 BuildRequires:      systemd-units systemd-devel
 Requires(post):     systemd
 Requires(preun):    systemd
@@ -71,7 +71,7 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%if 0%{?el7}
+%if 0%{?el7} || 0%{?amzn2}
 systemd_opts="USE_SYSTEMD=1"
 %else
 systemd_opts=
@@ -95,7 +95,7 @@ systemd_opts=
 %{__install} -d %{buildroot}%{_sysconfdir}/rc.d/init.d
 %{__install} -c -m 755 %{SOURCE2} %{buildroot}%{_sysconfdir}/rc.d/init.d/%{name}
 %endif
-%if 0%{?el7}
+%if 0%{?el7} || 0%{?amzn2}
 %{__install} -s %{name} %{buildroot}%{_sbindir}/
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
 %endif
@@ -117,7 +117,7 @@ getent passwd %{haproxy_user} >/dev/null || \
 exit 0
 
 %post
-%if 0%{?el7}
+%if 0%{?el7} || 0%{?amzn2}
 %systemd_post %{name}.service
 systemctl restart rsyslog.service
 %endif
@@ -128,7 +128,7 @@ systemctl restart rsyslog.service
 %endif
 
 %preun
-%if 0%{?el7}
+%if 0%{?el7} || 0%{?amzn2}
 %systemd_preun %{name}.service
 %endif
 
@@ -140,7 +140,7 @@ fi
 %endif
 
 %postun
-%if 0%{?el7}
+%if 0%{?el7} || 0%{?amzn2}
 %systemd_postun_with_restart %{name}.service
 systemctl restart rsyslog.service
 %endif
@@ -162,7 +162,7 @@ fi
 %if 0%{?el6} || 0%{?amzn1}
 %attr(0755,root,root) %config %_sysconfdir/rc.d/init.d/%{name}
 %endif
-%if 0%{?el7}
+%if 0%{?el7} || 0%{?amzn2}
 %attr(0755,root,root) %{_sbindir}/%{name}
 %attr(-,root,root) %{_unitdir}/%{name}.service
 %endif
@@ -173,6 +173,10 @@ fi
 %attr(0644,root,root) %config %{_sysconfdir}/rsyslog.d/49-%{name}.conf
 
 %changelog
+* Fri June 29 2018 Topher Cullen <topher@shawlite.com>
+- Update to HAproxy 1.8.12
+- Add support for Amazon Linux 2
+
 * Thu May 18 2018 David Bezemer <info@davidbezemer.nl>
 - Update to HAproxy 1.8.8
 
