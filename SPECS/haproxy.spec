@@ -173,7 +173,7 @@ fi
 %attr(0644,root,root) %config %{_sysconfdir}/rsyslog.d/49-%{name}.conf
 
 %changelog
-* Fri June 29 2018 Topher Cullen <topher@shawlite.com>
+* Fri Jun 29 2018 Topher Cullen <topher@shawlite.com>
 - Update to HAproxy 1.8.12
 - Add support for Amazon Linux 2
 
