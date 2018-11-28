@@ -2,7 +2,7 @@
 %define haproxy_group   %{haproxy_user}
 %define haproxy_home    %{_localstatedir}/lib/haproxy
 
-%if 0%{?rhel} == 7 && 0%{!?amzn2}
+%if "%{?dist}" == ".el7.centos"
     # CentOS 7 forces ".el7.centos", wtf CentOS maintainers...
     %define dist .el7
 %endif
