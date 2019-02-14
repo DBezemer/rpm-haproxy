@@ -1,12 +1,12 @@
 HOME=$(shell pwd)
 MAINVERSION=1.8
-VERSION=1.8.14
+VERSION=$(shell wget -qO- http://git.haproxy.org/git/haproxy-${MAINVERSION}.git/refs/tags/ | sed -n 's:.*>\(.*\)</a>.*:\1:p' | sed 's/^.//' | sort -rV | head -1)
 RELEASE=1
 
 all: build
 
 install_prereq:
-	sudo yum install -y pcre-devel pcre-devel make gcc openssl-devel rpm-build systemd-devel
+	sudo yum install -y pcre-devel pcre-devel make gcc openssl-devel rpm-build systemd-devel sed wget
 
 clean:
 	rm -f ./SOURCES/haproxy-${VERSION}.tar.gz
