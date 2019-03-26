@@ -165,21 +165,21 @@ fi
 %defattr(-,root,root)
 %doc CHANGELOG README examples/*.cfg doc/architecture.txt doc/configuration.txt doc/intro.txt doc/management.txt doc/proxy-protocol.txt
 %doc %{_mandir}/man1/%{name}.1*
-%dir %{_localstatedir}/log/%{name}
-
-%attr(0755,root,root) %{_sbindir}/%{name}
-%if 0%{?el6} || 0%{?amzn1}
-%attr(0755,root,root) %config %_sysconfdir/rc.d/init.d/%{name}
-%endif
-%if 0%{?el7} || 0%{?amzn2}
-%attr(0755,root,root) %{_sbindir}/%{name}
-%attr(-,root,root) %{_unitdir}/%{name}.service
-%endif
 %dir %{_sysconfdir}/%{name}
 %{_sysconfdir}/%{name}/errors
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/%{name}/%{name}.cfg
+%attr(0755,root,root) %{_sbindir}/%{name}
+
+%if 0%{?el6} || 0%{?amzn1}
+%dir %{_localstatedir}/log/%{name}
+%attr(0755,root,root) %config %_sysconfdir/rc.d/init.d/%{name}
 %attr(0644,root,root) %config %{_sysconfdir}/logrotate.d/%{name}
 %attr(0644,root,root) %config %{_sysconfdir}/rsyslog.d/49-%{name}.conf
+%endif
+
+%if 0%{?el7} || 0%{?amzn2}
+%attr(-,root,root) %{_unitdir}/%{name}.service
+%endif
 
 %changelog
 * Wed Sep 26 2018 J. Casalino <casalino@adobe.com>
