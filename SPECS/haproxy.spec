@@ -33,6 +33,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: pcre-devel make gcc openssl-devel
 
 Requires(pre):      shadow-utils
+Requires:           rsyslog
 
 %if 0%{?el6} || 0%{?amzn1}
 Requires(post):     chkconfig, initscripts
