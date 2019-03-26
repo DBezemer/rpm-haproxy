@@ -5,7 +5,6 @@ $UDPServerRun 514
 $template HAProxy,"%syslogtag%%msg:::drop-last-lf%\n"
 $template TraditionalFormatWithPRI,"%pri-text%: %timegenerated% %syslogtag%%msg:::drop-last-lf%\n"
 
-local2.=info     /var/log/haproxy/access.log;HAProxy
-local2.=notice;local2.=warning    /var/log/haproxy/status.log;TraditionalFormatWithPRI
+local2.*     /var/log/haproxy/access.log;HAProxy
+local2.notice;local2.warning    /var/log/haproxy/status.log;TraditionalFormatWithPRI
 local2.error    /var/log/haproxy/error.log;TraditionalFormatWithPRI
-local2.* ~
