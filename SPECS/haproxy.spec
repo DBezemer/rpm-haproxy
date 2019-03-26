@@ -189,7 +189,7 @@ fi
 - Update to HAproxy 1.8.12
 - Add support for Amazon Linux 2
 
-* Thu May 18 2018 David Bezemer <info@davidbezemer.nl>
+* Fri May 18 2018 David Bezemer <info@davidbezemer.nl>
 - Update to HAproxy 1.8.8
 
 * Fri Feb 23 2018 J. Casalino <casalino@adobe.com>
