@@ -2,6 +2,10 @@
 %define haproxy_group   %{haproxy_user}
 %define haproxy_home    %{_localstatedir}/lib/haproxy
 
+%if 0%{?rhel} == 6 && 0%{!?amzn1}
+    %define dist .el6
+%endif
+
 %if 0%{?rhel} == 7 && 0%{!?amzn2}
     # CentOS 7 forces ".el7.centos", wtf CentOS maintainers...
     %define dist .el7
@@ -19,12 +23,12 @@ License: GPL
 Group: System Environment/Daemons
 URL: http://www.haproxy.org/
 Source0: http://www.haproxy.org/download/1.8/src/%{name}-%{version}.tar.gz
-Source1: %{name}.cfg
-%{?amzn1:Source2: %{name}.init}
+Source1: %{name}.cfg%{?dist}
 %{?el6:Source2: %{name}.init}
+%{?amzn1:Source2: %{name}.init}
 %{?el7:Source2: %{name}.service}
-Source3: %{name}.logrotate
-Source4: %{name}.syslog%{?dist}
+%{?el6:Source3: %{name}.logrotate}
+Source4: %{name}.syslog
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: pcre-devel make gcc openssl-devel
 
@@ -78,8 +82,8 @@ pcre_opts="USE_PCRE=1 USE_PCRE_JIT=1"
 systemd_opts=
 pcre_opts="USE_PCRE=1"
 %endif
-
-%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}" DEFINE=-DTCP_USER_TIMEOUT=18
+USE_TFO=1
+%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags} USE_THREAD=1 USE_TFO=1"
 
 %install
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
@@ -101,10 +105,12 @@ pcre_opts="USE_PCRE=1"
 %{__install} -s %{name} %{buildroot}%{_sbindir}/
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
 %endif
-%{__install} -c -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/%{name}/
+%{__install} -c -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/%{name}/haproxy.cfg
 %{__install} -c -m 755 examples/errorfiles/*.http %{buildroot}%{_sysconfdir}/%{name}/errors/
+%if 0%{?el6}
 %{__install} -c -m 755 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 %{__install} -c -m 755 %{SOURCE4} %{buildroot}%{_sysconfdir}/rsyslog.d/49-%{name}.conf
+%endif
 %{__install} -c -m 755 doc/%{name}.1 %{buildroot}%{_mandir}/man1/
 
 %clean
