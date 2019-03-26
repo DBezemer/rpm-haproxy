@@ -92,6 +92,7 @@ USE_TFO=1
 %{__install} -d %{buildroot}%{_sysconfdir}/%{name}
 %{__install} -d %{buildroot}%{_sysconfdir}/%{name}/errors
 %{__install} -d %{buildroot}%{_mandir}/man1/
+%{__install} -d %{buildroot}%{_localstatedir}/log/%{name}
 
 %{__install} -s %{name} %{buildroot}%{_sbindir}/
 
@@ -99,7 +100,6 @@ USE_TFO=1
 %{__install} -d %{buildroot}%{_sysconfdir}/rc.d/init.d
 %{__install} -d %{buildroot}%{_sysconfdir}/logrotate.d
 %{__install} -d %{buildroot}%{_sysconfdir}/rsyslog.d
-%{__install} -d %{buildroot}%{_localstatedir}/log/%{name}
 %{__install} -c -m 755 %{SOURCE2} %{buildroot}%{_sysconfdir}/rc.d/init.d/%{name}
 %{__install} -c -m 755 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 %{__install} -c -m 755 %{SOURCE4} %{buildroot}%{_sysconfdir}/rsyslog.d/49-%{name}.conf
@@ -169,9 +169,9 @@ fi
 %{_sysconfdir}/%{name}/errors
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/%{name}/%{name}.cfg
 %attr(0755,root,root) %{_sbindir}/%{name}
+%dir %{_localstatedir}/log/%{name}
 
 %if 0%{?el6} || 0%{?amzn1}
-%dir %{_localstatedir}/log/%{name}
 %attr(0755,root,root) %config %_sysconfdir/rc.d/init.d/%{name}
 %attr(0644,root,root) %config %{_sysconfdir}/logrotate.d/%{name}
 %attr(0644,root,root) %config %{_sysconfdir}/rsyslog.d/49-%{name}.conf
