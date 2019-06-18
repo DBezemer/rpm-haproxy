@@ -18,7 +18,7 @@ Perform the following on a build box as a regular user.
 ## Build using makefile
     make
     
-Resulting RPM will be in /opt/rpm-haproxy/rpmbuild/RPMS/
+Resulting RPM will be in /opt/rpm-haproxy/rpmbuild/RPMS/x86_64/
 
 ## Credits
 
@@ -28,5 +28,6 @@ Based on the Red Hat 6.4 RPM spec for haproxy 1.4 combined with work done by
 - [@kevholmes](https://www.github.com/kevholmes)
 - Update to 1.8 contributed by [@khdevel](https://github.com/khdevel)
 - Amazon Linux support contributed by [@thedoc31](https://github.com/thedoc31)
+- Version detect snippet by [@hiddenstream](https://github.com/hiddenstream)
 
-Additional logging added based on https://www.percona.com/blog/2014/10/03/haproxy-give-me-some-logs-on-centos-6-5/
+Additional logging inspired by https://www.percona.com/blog/2014/10/03/haproxy-give-me-some-logs-on-centos-6-5/
