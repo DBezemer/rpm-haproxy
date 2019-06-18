@@ -84,7 +84,7 @@ systemd_opts=
 pcre_opts="USE_PCRE=1"
 %endif
 USE_TFO=1
-%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=1 ADDLIB="%{__global_ldflags}"
+%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=1 ADDLIB="%{__global_ldflags}"
 
 %install
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
@@ -183,6 +183,9 @@ fi
 %endif
 
 %changelog
+* Tue Jun 18 2019 David Bezemer <info@davidbezemer.nl>
+- First build of HAproxy 2.0.0
+
 * Tue Jun 18 2019 David Bezemer <info@davidbezemer.nl>
 - Update to HAproxy 1.9.8
 
