@@ -1,5 +1,5 @@
 HOME=$(shell pwd)
-MAINVERSION=1.9
+MAINVERSION=2.0
 VERSION=$(shell wget -qO- http://git.haproxy.org/git/haproxy-${MAINVERSION}.git/refs/tags/ | sed -n 's:.*>\(.*\)</a>.*:\1:p' | sed 's/^.//' | sort -rV | head -1)
 RELEASE=1
 
