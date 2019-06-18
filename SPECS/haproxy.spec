@@ -76,17 +76,8 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%_smp_mflags %( \
-    [ -z "$RPM_BUILD_NCPUS" ] \\\
-        && RPM_BUILD_NCPUS="`/usr/bin/nproc 2>/dev/null || \\\
-                             /usr/bin/getconf _NPROCESSORS_ONLN`"; \\\
-    if [ "$RPM_BUILD_NCPUS" -gt 8 ]; then \\\
-        echo "-j8"; \\\
-    elif [ "$RPM_BUILD_NCPUS" -gt 2 ]; then \\\
-        echo "-j$RPM_BUILD_NCPUS"; \\\
-    else \\\
-        echo "-j2"; \\\
-    fi )
+
+RPM_BUILD_NCPUS="`/usr/bin/nproc 2>/dev/null || /usr/bin/getconf _NPROCESSORS_ONLN`";
 
 %if 0%{?el7} || 0%{?amzn2}
 systemd_opts="USE_SYSTEMD=1"
@@ -96,7 +87,7 @@ systemd_opts=
 pcre_opts="USE_PCRE=1"
 %endif
 USE_TFO=1
-%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=1 ADDLIB="%{__global_ldflags}"
+%{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=1 ADDLIB="%{__global_ldflags}"
 
 %install
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
