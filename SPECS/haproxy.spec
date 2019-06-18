@@ -183,7 +183,7 @@ fi
 %endif
 
 %changelog
-* Tue Jun 18 David Bezemer <info@davidbezemer.nl>
+* Tue Jun 18 2019 David Bezemer <info@davidbezemer.nl>
 - Update to HAproxy 1.9.8
 
 * Wed Sep 26 2018 J. Casalino <casalino@adobe.com>
