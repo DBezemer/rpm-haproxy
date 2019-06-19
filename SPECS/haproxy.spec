@@ -84,6 +84,9 @@ systemd_opts="USE_SYSTEMD=1"
 pcre_opts="USE_PCRE=1 USE_PCRE_JIT=1"
 USE_TFO=1
 %else
+%if 0%{?amzn1}
+USE_TFO=1
+%endif
 systemd_opts=
 pcre_opts="USE_PCRE=1"
 USE_TFO=
