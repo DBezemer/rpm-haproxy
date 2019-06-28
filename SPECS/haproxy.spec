@@ -77,22 +77,24 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-
 RPM_BUILD_NCPUS="`/usr/bin/nproc 2>/dev/null || /usr/bin/getconf _NPROCESSORS_ONLN`";
 
-%if 0%{?el7} || 0%{?amzn2}
-systemd_opts="USE_SYSTEMD=1"
-pcre_opts="USE_PCRE=1 USE_PCRE_JIT=1"
-USE_TFO=1
-%else
+# Default opts
 systemd_opts=
 pcre_opts="USE_PCRE=1"
 USE_TFO=
 USE_NS=
+
+%if 0%{?el7} || 0%{?amzn2}
+systemd_opts="USE_SYSTEMD=1"
+pcre_opts="USE_PCRE=1 USE_PCRE_JIT=1"
 %endif
-%if 0%{?amzn1}
+
+%if 0%{?el7} || 0%{?amzn2} || 0%{?amzn1}
 USE_TFO=1
+USE_NS=1
 %endif
+
 %{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ADDLIB="%{__global_ldflags}"
 
 %install
