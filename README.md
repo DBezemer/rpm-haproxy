@@ -3,7 +3,7 @@
 This repository contains some build artifacts of HAproxy that are provided with no support and no expectation of stability.
 The recommended way of using the repository is to build and test your own packages.
 
-# A Recipe for a HAProxy 1.8 stable version RPM on CentOS / RHEL / Amazon Linux
+# RPM Specs for HAproxy on CentOS / RHEL / Amazon Linux with default syslog
 
 Perform the following steps on a build box as a regular user.
 
@@ -30,7 +30,7 @@ Based on the Red Hat 6.4 RPM spec for haproxy 1.4 combined with work done by
 - [@resmo](https://www.github.com/resmo) 
 - [@kevholmes](https://www.github.com/kevholmes)
 - Update to 1.8 contributed by [@khdevel](https://github.com/khdevel)
-- Amazon Linux support contributed by [@thedoc31](https://github.com/thedoc31)
+- Amazon Linux support contributed by [@thedoc31](https://github.com/thedoc31) and [@jazzl0ver](https://github.com/jazzl0ver)
 - Version detect snippet by [@hiddenstream](https://github.com/hiddenstream)
 
 Additional logging inspired by https://www.percona.com/blog/2014/10/03/haproxy-give-me-some-logs-on-centos-6-5/
