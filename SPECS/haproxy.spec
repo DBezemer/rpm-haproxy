@@ -109,10 +109,10 @@ USE_TFO=1
 %{__install} -s %{name} %{buildroot}%{_sbindir}/
 
 %{__install} -c -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/%{name}/haproxy.cfg
-%{__install} -c -m 755 examples/errorfiles/*.http %{buildroot}%{_sysconfdir}/%{name}/errors/
-%{__install} -c -m 755 doc/%{name}.1 %{buildroot}%{_mandir}/man1/
-%{__install} -c -m 755 %{SOURCE4} %{buildroot}%{_sysconfdir}/rsyslog.d/49-%{name}.conf
-%{__install} -c -m 755 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
+%{__install} -c -m 644 examples/errorfiles/*.http %{buildroot}%{_sysconfdir}/%{name}/errors/
+%{__install} -c -m 644 doc/%{name}.1 %{buildroot}%{_mandir}/man1/
+%{__install} -c -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/rsyslog.d/49-%{name}.conf
+%{__install} -c -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 
 %if 0%{?el6} || 0%{?amzn1}
 %{__install} -d %{buildroot}%{_sysconfdir}/rc.d/init.d
