@@ -26,6 +26,7 @@ Source1: %{name}.cfg
 %{?amzn2:Source2: %{name}.service}
 Source3: %{name}.logrotate
 Source4: %{name}.syslog%{?dist}
+Source5: halog.1
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 BuildRequires: pcre-devel
