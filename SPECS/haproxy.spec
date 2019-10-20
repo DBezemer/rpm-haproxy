@@ -111,6 +111,7 @@ popd
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
 
 %{__install} -d %{buildroot}%{_sbindir}
+%{__install} -d %{buildroot}%{_bindir}
 %{__install} -d %{buildroot}%{_sysconfdir}/%{name}
 %{__install} -d %{buildroot}%{_sysconfdir}/%{name}/errors
 %{__install} -d %{buildroot}%{_mandir}/man1/
