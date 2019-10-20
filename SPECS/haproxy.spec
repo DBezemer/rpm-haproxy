@@ -84,7 +84,6 @@ systemd_opts=
 pcre_opts="USE_PCRE=1"
 USE_TFO=
 USE_NS=
-buildtarget=linux-glibc-legacy
 
 %if 0%{?el7} || 0%{?amzn2}
 systemd_opts="USE_SYSTEMD=1"
@@ -92,12 +91,11 @@ pcre_opts="USE_PCRE=1 USE_PCRE_JIT=1"
 %endif
 
 %if 0%{?el7} || 0%{?amzn2} || 0%{?amzn1}
-buildtarget=linux-glibc
 USE_TFO=1
 USE_NS=1
 %endif
 
-%{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} CPU="generic" TARGET="${buildtarget}" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ADDLIB="%{__global_ldflags}"
+%{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ADDLIB="%{__global_ldflags}"
 
 %install
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
@@ -196,9 +194,6 @@ fi
 %endif
 
 %changelog
-* Sun Oct 20 2019 David Bezemer <info@davidbezemer.nl>
-- Switch build target for CentOS6 per https://github.com/haproxy/haproxy/issues/128
-
 * Tue Jun 18 2019 David Bezemer <info@davidbezemer.nl>
 - First build of HAproxy 2.0.0
 
