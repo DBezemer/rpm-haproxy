@@ -2,14 +2,7 @@
 %define haproxy_group   %{haproxy_user}
 %define haproxy_home    %{_localstatedir}/lib/haproxy
 
-%if 0%{?rhel} == 6 && 0%{!?amzn1}
-    %define dist .el6
-%endif
-
-%if 0%{?rhel} == 7 && 0%{!?amzn2}
-    # CentOS 7 forces ".el7.centos", wtf CentOS maintainers...
-    %define dist .el7
-%endif
+%define dist %{expand:%%(/usr/lib/rpm/redhat/dist.sh --dist)}
 
 %if 0%{?rhel} < 7
     %{!?__global_ldflags: %global __global_ldflags -Wl,-z,relro}
@@ -42,7 +35,7 @@ Requires(preun):    chkconfig, initscripts
 Requires(postun):   initscripts
 %endif
 
-%if 0%{?el7} || 0%{?amzn2}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
 BuildRequires:      systemd-units systemd-devel
 Requires(post):     systemd
 Requires(preun):    systemd
@@ -85,12 +78,12 @@ pcre_opts="USE_PCRE=1"
 USE_TFO=
 USE_NS=
 
-%if 0%{?el7} || 0%{?amzn2}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
 systemd_opts="USE_SYSTEMD=1"
 pcre_opts="USE_PCRE=1 USE_PCRE_JIT=1"
 %endif
 
-%if 0%{?el7} || 0%{?amzn2} || 0%{?amzn1}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?amzn1} || 0%{?el8}
 USE_TFO=1
 USE_NS=1
 %endif
@@ -121,7 +114,7 @@ USE_NS=1
 %{__install} -c -m 755 %{SOURCE2} %{buildroot}%{_sysconfdir}/rc.d/init.d/%{name}
 %endif
 
-%if 0%{?el7} || 0%{?amzn2}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
 %{__install} -s %{name} %{buildroot}%{_sbindir}/
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
 %endif
@@ -138,7 +131,7 @@ getent passwd %{haproxy_user} >/dev/null || \
 exit 0
 
 %post
-%if 0%{?el7} || 0%{?amzn2}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
 %systemd_post %{name}.service
 systemctl restart rsyslog.service
 %endif
@@ -149,7 +142,7 @@ systemctl restart rsyslog.service
 %endif
 
 %preun
-%if 0%{?el7} || 0%{?amzn2}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
 %systemd_preun %{name}.service
 %endif
 
@@ -161,7 +154,7 @@ fi
 %endif
 
 %postun
-%if 0%{?el7} || 0%{?amzn2}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
 %systemd_postun_with_restart %{name}.service
 systemctl restart rsyslog.service
 %endif

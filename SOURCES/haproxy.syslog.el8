@@ -1,0 +1,11 @@
+$ModLoad imudp
+$UDPServerAddress 127.0.0.1
+$UDPServerRun 514
+
+$template HAProxy,"%TIMESTAMP% %syslogseverity-text:::UPPERCASE%: %msg:::drop-last-lf%\n"
+$template HAProxyAccess,"%msg%\n"
+
+local2.=info if $programname startswith 'haproxy' then /var/log/haproxy/access.log;HAProxyAccess 
+local2.emerg if $programname startswith 'haproxy' then /var/log/haproxy/error.log;HAProxy
+local2.notice if $programname startswith 'haproxy' then /var/log/haproxy/status.log;HAProxy
+local2.* & stop
