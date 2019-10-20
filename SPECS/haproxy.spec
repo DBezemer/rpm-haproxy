@@ -193,7 +193,9 @@ fi
 %files
 %defattr(-,root,root)
 %doc CHANGELOG README examples/*.cfg doc/architecture.txt doc/configuration.txt doc/intro.txt doc/management.txt doc/proxy-protocol.txt
-%license LICENSE
+%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
+    %license LICENSE
+%endif
 %doc %{_mandir}/man1/*
 %dir %{_sysconfdir}/%{name}
 %{_sysconfdir}/%{name}/errors
