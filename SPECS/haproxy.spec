@@ -8,11 +8,13 @@
     %{!?__global_ldflags: %global __global_ldflags -Wl,-z,relro}
 %endif
 
-Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
+%global _hardened_build 1
+
+Summary: HA-Proxy reverse proxy for high availability environments
 Name: haproxy
 Version: %{version}
 Release: %{release}%{?dist}
-License: GPL
+License: GPLv2+
 Group: System Environment/Daemons
 URL: http://www.haproxy.org/
 Source0: http://www.haproxy.org/download/1.8/src/%{name}-%{version}.tar.gz
@@ -25,7 +27,13 @@ Source1: %{name}.cfg
 Source3: %{name}.logrotate
 Source4: %{name}.syslog%{?dist}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
-BuildRequires: pcre-devel make gcc openssl-devel
+
+BuildRequires: pcre-devel
+BuildRequires: lua-devel
+BuildRequires: zlib-devel
+BuildRequires: make
+BuildRequires: gcc openssl-devel
+BuildRequires: openssl-devel
 
 Requires(pre):      shadow-utils
 Requires:           rsyslog
@@ -37,7 +45,8 @@ Requires(postun):   initscripts
 %endif
 
 %if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
-BuildRequires:      systemd-units systemd-devel
+BuildRequires:      systemd-units
+BuildRequires:      systemd-devel
 Requires(post):     systemd
 Requires(preun):    systemd
 Requires(postun):   systemd
@@ -89,7 +98,15 @@ USE_TFO=1
 USE_NS=1
 %endif
 
-%{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ADDLIB="%{__global_ldflags}"
+%{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 USE_LUA=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ADDLIB="%{__global_ldflags}"
+
+pushd contrib/halog
+%{__make} ${halog} OPTIMIZE="%{optflags} %{build_ldflags}" LDFLAGS=
+popd
+
+pushd contrib/iprange
+%{__make} ${iprange} OPTIMIZE="%{optflags} %{build_ldflags}" LDFLAGS=
+popd
 
 %install
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
@@ -104,11 +121,16 @@ USE_NS=1
 
 %{__install} -s %{name} %{buildroot}%{_sbindir}/
 
+
 %{__install} -c -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/%{name}/haproxy.cfg
 %{__install} -c -m 644 examples/errorfiles/*.http %{buildroot}%{_sysconfdir}/%{name}/errors/
 %{__install} -c -m 644 doc/%{name}.1 %{buildroot}%{_mandir}/man1/
 %{__install} -c -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/rsyslog.d/49-%{name}.conf
 %{__install} -c -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
+
+%{__install} -p -m 0755 ./contrib/halog/halog %{buildroot}%{_bindir}/halog
+%{__install} -p -m 0755 ./contrib/iprange/iprange %{buildroot}%{_bindir}/iprange
+%{__install} -p -D -m 0644 %{SOURCE5} %{buildroot}%{_mandir}/man1/halog.1
 
 %if 0%{?el6} || 0%{?amzn1}
 %{__install} -d %{buildroot}%{_sysconfdir}/rc.d/init.d
@@ -170,6 +192,7 @@ fi
 %files
 %defattr(-,root,root)
 %doc CHANGELOG README examples/*.cfg doc/architecture.txt doc/configuration.txt doc/intro.txt doc/management.txt doc/proxy-protocol.txt
+%license LICENSE
 %doc %{_mandir}/man1/%{name}.1*
 %dir %{_sysconfdir}/%{name}
 %{_sysconfdir}/%{name}/errors
@@ -183,7 +206,7 @@ fi
 %attr(0755,root,root) %config %_sysconfdir/rc.d/init.d/%{name}
 %endif
 
-%if 0%{?el7} || 0%{?amzn2}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
 %attr(-,root,root) %{_unitdir}/%{name}.service
 %endif
 
