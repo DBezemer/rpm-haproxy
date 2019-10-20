@@ -17,10 +17,11 @@ Group: System Environment/Daemons
 URL: http://www.haproxy.org/
 Source0: http://www.haproxy.org/download/1.8/src/%{name}-%{version}.tar.gz
 Source1: %{name}.cfg
-%if 0%{?el6} || 0%{?amzn1}
-Source2: %{name}.init
-%endif
+%{?el6:Source2: %{name}.init}
+%{?amzn1:Source2: %{name}.init}
 %{?el7:Source2: %{name}.service}
+%{?el8:Source2: %{name}.service}
+%{?amzn2:Source2: %{name}.service}
 Source3: %{name}.logrotate
 Source4: %{name}.syslog%{?dist}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
