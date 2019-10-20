@@ -194,7 +194,7 @@ fi
 %defattr(-,root,root)
 %doc CHANGELOG README examples/*.cfg doc/architecture.txt doc/configuration.txt doc/intro.txt doc/management.txt doc/proxy-protocol.txt
 %license LICENSE
-%doc %{_mandir}/man1/%{name}.1*
+%doc %{_mandir}/man1/*
 %dir %{_sysconfdir}/%{name}
 %{_sysconfdir}/%{name}/errors
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/%{name}/%{name}.cfg
@@ -202,6 +202,8 @@ fi
 %dir %{_localstatedir}/log/%{name}
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/rsyslog.d/49-%{name}.conf
+%{_bindir}/halog
+%{_bindir}/iprange
 
 %if 0%{?el6} || 0%{?amzn1}
 %attr(0755,root,root) %config %_sysconfdir/rc.d/init.d/%{name}
