@@ -2,7 +2,9 @@
 %define haproxy_group   %{haproxy_user}
 %define haproxy_home    %{_localstatedir}/lib/haproxy
 
-%define dist %{expand:%%(/usr/lib/rpm/redhat/dist.sh --dist)}
+%if 0%{?rhel} > 6 && 0%{!?amzn2}
+    %define dist %{expand:%%(/usr/lib/rpm/redhat/dist.sh --dist)}
+%endif
 
 %if 0%{?rhel} < 7
     %{!?__global_ldflags: %global __global_ldflags -Wl,-z,relro}
@@ -216,6 +218,9 @@ fi
 %endif
 
 %changelog
+* Tue Nov 19 2019 J. Casalino <casalino@adobe.com>
+- Only reset dist variable with dist.sh script if dist is CentOS/RHEL>6 and not Amazon Linux 2
+
 * Sun Oct 20 2019 David Bezemer <info@davidbezemer.nl>
 - Add compatiblity with CentOS/RHEL 8
 
