@@ -6,10 +6,21 @@ ifeq ("${VERSION}","./")
 endif
 RELEASE=1
 
+BUILDER_IMAGE:=haproxy-rpm-builder
+
+
+.PHONY: build-docker
+build-docker:
+	docker build -t $(BUILDER_IMAGE):latest -f Dockerfile .
+
+.PHONY: run-docker
+run-docker: clean build-docker
+	docker run --volume $(HOME):/builder --rm $(BUILDER_IMAGE):latest
+
 all: build
 
 install_prereq:
-	sudo yum install -y pcre-devel make gcc openssl-devel rpm-build systemd-devel wget sed zlib-devel
+	yum install -y pcre-devel make gcc openssl-devel rpm-build systemd-devel wget sed zlib-devel
 
 clean:
 	rm -f ./SOURCES/haproxy-${VERSION}.tar.gz
