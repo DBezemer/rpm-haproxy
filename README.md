@@ -19,9 +19,13 @@ Perform the following steps on a build box as a regular user.
     git checkout 2.0
 
 ## Build using makefile
+### Without Lua support
     make
-    
-Resulting RPM will be in /opt/rpm-haproxy/rpmbuild/RPMS/x86_64/
+
+### With Lua support
+    make USE_LUA=1
+
+Resulting RPM will be in `/opt/rpm-haproxy/rpmbuild/RPMS/x86_64/`
 
 ## Credits
 
