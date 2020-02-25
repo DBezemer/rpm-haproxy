@@ -16,7 +16,7 @@ Perform the following steps on a build box as a regular user.
     cd /opt
     git clone https://github.com/DBezemer/rpm-haproxy.git 
     cd ./rpm-haproxy
-    git checkout 2.0
+    git checkout 2.1
 
 ## Build using makefile
     make
