@@ -40,7 +40,7 @@ build: $(build_stages)
 	cp -r ./SPECS/* ./rpmbuild/SPECS/ || true
 	cp -r ./SOURCES/* ./rpmbuild/SOURCES/ || true
 	rpmbuild -ba SPECS/haproxy.spec \
-    --define "mainversion ${MAINVERSION}"
+	--define "mainversion ${MAINVERSION}"
 	--define "version ${VERSION}" \
 	--define "release ${RELEASE}" \
 	--define "_topdir %(pwd)/rpmbuild" \
