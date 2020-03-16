@@ -19,13 +19,13 @@ Release: %{release}%{?dist}
 License: GPLv2+
 Group: System Environment/Daemons
 URL: http://www.haproxy.org/
-Source0: http://www.haproxy.org/download/1.8/src/%{name}-%{version}.tar.gz
+Source0: http://www.haproxy.org/download/%{mainversion}/src/%{name}-%{version}.tar.gz
 Source1: %{name}.cfg
-%{?el6:Source2: %{name}.init}
-%{?amzn1:Source2: %{name}.init}
-%{?el7:Source2: %{name}.service}
-%{?el8:Source2: %{name}.service}
-%{?amzn2:Source2: %{name}.service}
+%if 0%{?el6} || 0%{?amzn1}
+Source2: %{name}.init
+%else
+Source2: %{name}.service
+%endif
 Source3: %{name}.logrotate
 Source4: %{name}.syslog%{?dist}
 Source5: halog.1
@@ -82,8 +82,6 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-RPM_BUILD_NCPUS="`/usr/bin/nproc 2>/dev/null || /usr/bin/getconf _NPROCESSORS_ONLN`";
-
 # Default opts
 systemd_opts=
 pcre_opts="USE_PCRE=1"
@@ -100,7 +98,11 @@ USE_TFO=1
 USE_NS=1
 %endif
 
-%{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} USE_LUA=%{_use_lua} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ADDLIB="%{__global_ldflags}"
+%if 0%{_use_lua}
+USE_LUA="USE_LUA=1"
+%endif
+
+%{__make} %{?_smp_mflags} ${USE_LUA} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ADDLIB="%{__global_ldflags}"
 
 pushd contrib/halog
 %{__make} ${halog} OPTIMIZE="%{optflags} %{__global_ldflags}"
@@ -218,6 +220,13 @@ fi
 %endif
 
 %changelog
+* Tue Feb 25 2020 David Bezemer <info@davidbezemer.nl>
+- Fix conditional LUA building
+- Add readline-devel as dependency for lua building
+
+* Tue Feb 25 2020 Davasny <davasny@gmail.com>
+- Add conditional LUA building
+
 * Tue Nov 19 2019 J. Casalino <casalino@adobe.com>
 - Only reset dist variable with dist.sh script if dist is CentOS/RHEL>6 and not Amazon Linux 2
 

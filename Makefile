@@ -1,10 +1,10 @@
 HOME=$(shell pwd)
-MAINVERSION=2.0
+MAINVERSION=2.1
 LUA_VERSION=5.3.5
 USE_LUA?=0
 VERSION=$(shell wget -qO- http://git.haproxy.org/git/haproxy-${MAINVERSION}.git/refs/tags/ | sed -n 's:.*>\(.*\)</a>.*:\1:p' | sed 's/^.//' | sort -rV | head -1)
 ifeq ("${VERSION}","./")
-        VERSION="${MAINVERSION}.0"
+		VERSION="${MAINVERSION}.0"
 endif
 RELEASE=1
 
@@ -23,6 +23,7 @@ download-upstream:
 	wget http://www.haproxy.org/download/${MAINVERSION}/src/haproxy-${VERSION}.tar.gz -O ./SOURCES/haproxy-${VERSION}.tar.gz
 
 build_lua:
+	sudo yum install -y readline-devel
 	wget https://www.lua.org/ftp/lua-${LUA_VERSION}.tar.gz
 	tar xzf lua-${LUA_VERSION}.tar.gz
 	cd lua-${LUA_VERSION}
@@ -39,6 +40,7 @@ build: $(build_stages)
 	cp -r ./SPECS/* ./rpmbuild/SPECS/ || true
 	cp -r ./SOURCES/* ./rpmbuild/SOURCES/ || true
 	rpmbuild -ba SPECS/haproxy.spec \
+    --define "mainversion ${MAINVERSION}"
 	--define "version ${VERSION}" \
 	--define "release ${RELEASE}" \
 	--define "_topdir %(pwd)/rpmbuild" \
@@ -46,4 +48,4 @@ build: $(build_stages)
 	--define "_buildroot %{_topdir}/BUILDROOT" \
 	--define "_rpmdir %{_topdir}/RPMS" \
 	--define "_srcrpmdir %{_topdir}/SRPMS" \
-	--define "_use_lua %{USE_LUA}"
+	--define "_use_lua ${USE_LUA}"
