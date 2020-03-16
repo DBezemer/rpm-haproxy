@@ -100,7 +100,11 @@ USE_TFO=1
 USE_NS=1
 %endif
 
-%{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} USE_LUA=%{_use_lua} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ADDLIB="%{__global_ldflags}"
+%if 0%{_use_lua}
+USE_LUA="USE_LUA=1"
+%endif
+
+%{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} ${USE_LUA} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ADDLIB="%{__global_ldflags}"
 
 pushd contrib/halog
 %{__make} ${halog} OPTIMIZE="%{optflags} %{__global_ldflags}"
@@ -218,8 +222,15 @@ fi
 %endif
 
 %changelog
+* Tue Feb 25 2020 David Bezemer <info@davidbezemer.nl>
+- Fix conditional LUA building
+- Add readline-devel as dependency for lua building
+
 * Tue Feb 25 2020 J. Casalino <casalino@adobe.com>
 - Add support for HAProxy 2.1.x
+
+* Tue Feb 25 2020 Davasny <davasny@gmail.com>
+- Add conditional LUA building
 
 * Tue Nov 19 2019 J. Casalino <casalino@adobe.com>
 - Only reset dist variable with dist.sh script if dist is CentOS/RHEL>6 and not Amazon Linux 2

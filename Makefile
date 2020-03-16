@@ -23,6 +23,7 @@ download-upstream:
 	wget http://www.haproxy.org/download/${MAINVERSION}/src/haproxy-${VERSION}.tar.gz -O ./SOURCES/haproxy-${VERSION}.tar.gz
 
 build_lua:
+    sudo yum install -y readline-devel
 	wget https://www.lua.org/ftp/lua-${LUA_VERSION}.tar.gz
 	tar xzf lua-${LUA_VERSION}.tar.gz
 	cd lua-${LUA_VERSION}
@@ -46,4 +47,4 @@ build: $(build_stages)
 	--define "_buildroot %{_topdir}/BUILDROOT" \
 	--define "_rpmdir %{_topdir}/RPMS" \
 	--define "_srcrpmdir %{_topdir}/SRPMS" \
-	--define "_use_lua %{USE_LUA}"
+	--define "_use_lua ${USE_LUA}"
