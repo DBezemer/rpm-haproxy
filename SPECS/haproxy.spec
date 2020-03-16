@@ -19,7 +19,7 @@ Release: %{release}%{?dist}
 License: GPLv2+
 Group: System Environment/Daemons
 URL: http://www.haproxy.org/
-Source0: http://www.haproxy.org/download/2.1/src/%{name}-%{version}.tar.gz
+Source0: http://www.haproxy.org/download/%{mainversion}/src/%{name}-%{version}.tar.gz
 Source1: %{name}.cfg
 %if 0%{?el6} || 0%{?amzn1}
 Source2: %{name}.init
