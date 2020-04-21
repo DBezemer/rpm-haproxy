@@ -8,4 +8,4 @@ $template HAProxyAccess,"%msg%\n"
 local2.=info     /var/log/haproxy/access.log;HAProxyAccess
 local2.error    /var/log/haproxy/error.log;HAProxy
 local2.* /var/log/haproxy/status.log
-& ~
+local2.* stop
