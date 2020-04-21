@@ -15,5 +15,4 @@ if $programname startswith 'haproxy' then {
   if $syslogseverity <= 5 then
       action(type="omfile" file="/var/log/haproxy/status.log" template="HAProxy")
       stop
-} else
-  action(type="omfile" file="/var/log/messages")
+}
