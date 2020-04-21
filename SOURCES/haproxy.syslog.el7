@@ -5,7 +5,14 @@ $UDPServerRun 514
 $template HAProxy,"%TIMESTAMP% %syslogseverity-text:::UPPERCASE%: %msg:::drop-last-lf%\n"
 $template HAProxyAccess,"%msg%\n"
 
-local2.=info if $programname startswith 'haproxy' then /var/log/haproxy/access.log;HAProxyAccess 
-local2.emerg if $programname startswith 'haproxy' then /var/log/haproxy/error.log;HAProxy
-local2.notice if $programname startswith 'haproxy' then /var/log/haproxy/status.log;HAProxy
-local2.* & stop
+if $programname startswith 'haproxy' then {
+  if $syslogseverity == 6 then
+      action(type="omfile" file="/var/log/haproxy/access.log" template="HAProxyAccess")
+      stop
+  if $syslogseverity <= 3 then
+      action(type="omfile" file="/var/log/haproxy/error.log" template="HAProxy")
+      stop
+  if $syslogseverity <= 5 then
+      action(type="omfile" file="/var/log/haproxy/status.log" template="HAProxy")
+      stop
+}
