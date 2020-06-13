@@ -2,6 +2,7 @@ HOME=$(shell pwd)
 MAINVERSION=2.0
 LUA_VERSION=5.3.5
 USE_LUA?=0
+USE_PROMETHEUS?=0
 VERSION=$(shell wget -qO- http://git.haproxy.org/git/haproxy-${MAINVERSION}.git/refs/tags/ | sed -n 's:.*>\(.*\)</a>.*:\1:p' | sed 's/^.//' | sort -rV | head -1)
 ifeq ("${VERSION}","./")
 		VERSION="${MAINVERSION}.0"
@@ -48,4 +49,5 @@ build: $(build_stages)
 	--define "_buildroot %{_topdir}/BUILDROOT" \
 	--define "_rpmdir %{_topdir}/RPMS" \
 	--define "_srcrpmdir %{_topdir}/SRPMS" \
-	--define "_use_lua ${USE_LUA}"
+	--define "_use_lua ${USE_LUA}" \
+	--define "_use_prometheus ${USE_PROMETHEUS}"
