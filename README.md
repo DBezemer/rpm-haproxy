@@ -24,8 +24,20 @@ Perform the following steps on a build box as a regular user.
 
 ### With Lua support
     make USE_LUA=1
+    
+### With Prometheus Module support
+    make USE_PROMETHEUS=1
+    
+### Without sudo for yum
+    make NO_SUDO=1
 
 Resulting RPM will be in `/opt/rpm-haproxy/rpmbuild/RPMS/x86_64/`
+
+## Build using Docker
+    make run-docker
+    
+    Resulting RPMs will be in `./RPMS/`
+
 
 ## Credits
 
