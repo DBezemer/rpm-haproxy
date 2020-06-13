@@ -226,6 +226,9 @@ fi
 %endif
 
 %changelog
+* Sat Jun 13 2020 David Bezemer <info@davidbezemer.nl>
+- Add conditional prometheus module support by mfilz
+
 * Tue Feb 25 2020 David Bezemer <info@davidbezemer.nl>
 - Fix conditional LUA building
 - Add readline-devel as dependency for lua building
