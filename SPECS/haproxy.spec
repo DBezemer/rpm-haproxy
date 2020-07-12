@@ -167,7 +167,7 @@ exit 0
 %post
 %if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
 %systemd_post %{name}.service
-systemctl restart rsyslog.service
+systemctl try-reload-or-restart rsyslog.service
 %endif
 
 %if 0%{?el6} || 0%{?amzn1}
@@ -190,7 +190,7 @@ fi
 %postun
 %if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
 %systemd_postun_with_restart %{name}.service
-systemctl restart rsyslog.service
+systemctl try-reload-or-restart rsyslog.service
 %endif
 
 %if 0%{?el6} || 0%{?amzn1}
@@ -226,6 +226,9 @@ fi
 %endif
 
 %changelog
+* Sun Jul 12 2020 David Bezemer <info@davidbezemer.nl>
+- Add support for HAProxy 2.1.x
+
 * Sat Jun 13 2020 David Bezemer <info@davidbezemer.nl>
 - Add conditional prometheus module support by mfilz
 
