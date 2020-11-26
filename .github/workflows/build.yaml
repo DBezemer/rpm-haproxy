@@ -11,6 +11,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup env
+      - name: Build
         run: |
           make run-docker -e USE_LUA=1
+          ls -l
