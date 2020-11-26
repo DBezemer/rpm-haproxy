@@ -13,4 +13,4 @@ jobs:
 
       - name: Setup env
         run: |
-          make run-docker
+          make run-docker -e USE_LUA=1
