@@ -43,7 +43,7 @@ ifeq ($(USE_LUA),1)
 endif
 
 build-docker:
-	docker build -t haproxy-rpm-builder:latest -f Dockerfile .
+	docker build -e USE_LUA=1 -t haproxy-rpm-builder:latest -f Dockerfile .
 
 run-docker: build-docker
 	mkdir -p RPMS
