@@ -1,8 +1,9 @@
 name: build
 on:
   pull_request:
-  tags:
-  - 'v*'
+  push:
+    tags:
+     - 'v*'
 jobs:
   build:
     runs-on: ubuntu-latest
