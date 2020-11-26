@@ -13,7 +13,7 @@ jobs:
 
       - name: Build
         run: |
-          make run-docker -e USE_LUA=1
+          make run-docker
           ls -l
       - name: Upload artifact
         uses: actions/upload-artifact@v2
