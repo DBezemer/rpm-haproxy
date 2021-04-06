@@ -8,7 +8,7 @@ VERSION=$(shell wget -qO- http://git.haproxy.org/git/haproxy-${MAINVERSION}.git/
 ifeq ("${VERSION}","./")
 		VERSION="${MAINVERSION}.0"
 endif
-RELEASE=1
+RELEASE?=1
 
 all: build
 
