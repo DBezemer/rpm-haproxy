@@ -130,7 +130,7 @@ popd
 %{__install} -d %{buildroot}%{_sysconfdir}/rsyslog.d
 %{__install} -d %{buildroot}%{_localstatedir}/log/%{name}
 
-%{__install} -s %{name} %{buildroot}%{_sbindir}/
+%{__install} -p %{name} %{buildroot}%{_sbindir}/
 
 
 %{__install} -c -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/%{name}/haproxy.cfg
