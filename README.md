@@ -34,6 +34,9 @@ Perform the following steps on a build box as a regular user.
 ### With a custom release iteration, e.g. '2' (default '1'):
     make RELEASE=2
 
+### Custom CFLAGS, e.g. '-O0' to disable optimization for debug:
+    make EXTRA_CFLAGS=-O0
+
 Resulting RPM will be in `/opt/rpm-haproxy/rpmbuild/RPMS/x86_64/`
 
 ## Build using Docker

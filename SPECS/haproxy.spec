@@ -87,6 +87,7 @@ RPM_BUILD_NCPUS="`/usr/bin/nproc 2>/dev/null || /usr/bin/getconf _NPROCESSORS_ON
 # Default opts
 systemd_opts=
 pcre_opts="USE_PCRE=1"
+CFLAGS="%{optflags}"
 USE_TFO=
 USE_NS=
 
@@ -108,7 +109,11 @@ USE_LUA="USE_LUA=1"
 USE_PROMETHEUS="EXTRA_OBJS=contrib/prometheus-exporter/service-prometheus.o"
 %endif
 
-%{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} ${USE_LUA} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ${USE_PROMETHEUS} ADDLIB="%{__global_ldflags}"
+if [ -n "%{_extra_cflags}" ] ; then
+  CFLAGS="$CFLAGS %{_extra_cflags}"
+fi
+
+%{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} ${USE_LUA} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="$CFLAGS" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ${USE_PROMETHEUS} ADDLIB="%{__global_ldflags}"
 
 pushd contrib/halog
 %{__make} ${halog} OPTIMIZE="%{optflags} %{__global_ldflags}"

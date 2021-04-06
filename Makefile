@@ -57,6 +57,7 @@ build: $(build_stages)
 		--define "mainversion ${MAINVERSION}" \
 	--define "version ${VERSION}" \
 	--define "release ${RELEASE}" \
+	--define "_extra_cflags ${EXTRA_CFLAGS}" \
 	--define "_topdir %(pwd)/rpmbuild" \
 	--define "_builddir %{_topdir}/BUILD" \
 	--define "_buildroot %{_topdir}/BUILDROOT" \
