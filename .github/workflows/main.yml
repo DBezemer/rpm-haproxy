@@ -1,0 +1,25 @@
+name: Build all tags automatically as pre-releases
+on:
+  pull_request:
+  push:
+    tags:
+     - "*"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: build
+        run: |
+          make run-docker
+      - name: Upload RPMs
+        uses: actions/upload-artifact@v2
+        with:
+          name: rpms
+          path: RPMS/**/*
+      - uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          files: |
+            RPMS/**/*.rpm
