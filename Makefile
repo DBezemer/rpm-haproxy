@@ -47,7 +47,7 @@ build-docker:
 
 run-docker: build-docker
 	mkdir -p RPMS
-	chcon -Rt svirt_sandbox_file_t RPMS
+	chcon -Rt svirt_sandbox_file_t RPMS || true
 	docker run --volume $(HOME)/RPMS:/RPMS --rm haproxy-rpm-builder:latest
 
 build: $(build_stages)
