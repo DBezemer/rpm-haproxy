@@ -231,6 +231,9 @@ fi
 %endif
 
 %changelog
+* Sun Apr 12 2021 David Bezemer <info@davidbezemer.nl>
+- Add support for HAProxy 2.3.x
+
 * Sun Jul 12 2020 David Bezemer <info@davidbezemer.nl>
 - Backwards compatible conditional restart using reload-or-try-restart
 
