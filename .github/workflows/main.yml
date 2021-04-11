@@ -1,4 +1,4 @@
-name: Build all tags automatically as pre-releases
+name: Build RPMs
 on: [push]
 jobs:
   build:
