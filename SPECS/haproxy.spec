@@ -109,7 +109,7 @@ USE_LUA="USE_LUA=1"
 USE_PROMETHEUS="EXTRA_OBJS=contrib/prometheus-exporter/service-prometheus.o"
 %endif
 
-%if 0%{_extra_cflags}
+%if "%{_extra_cflags}" == "%%{_extra_cflags}"
   CFLAGS="$CFLAGS %{_extra_cflags}"
 %endif
 
