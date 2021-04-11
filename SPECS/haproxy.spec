@@ -21,11 +21,7 @@ Group: System Environment/Daemons
 URL: http://www.haproxy.org/
 Source0: http://www.haproxy.org/download/%{mainversion}/src/%{name}-%{version}.tar.gz
 Source1: %{name}.cfg
-%if 0%{?el6} || 0%{?amzn1}
-Source2: %{name}.init
-%else
 Source2: %{name}.service
-%endif
 Source3: %{name}.logrotate
 Source4: %{name}.syslog%{?dist}
 Source5: halog.1
@@ -150,7 +146,7 @@ popd
 
 %if 0%{?el6} || 0%{?amzn1}
 %{__install} -d %{buildroot}%{_sysconfdir}/rc.d/init.d
-%{__install} -c -m 755 %{SOURCE2} %{buildroot}%{_sysconfdir}/rc.d/init.d/%{name}
+%{__install} -c -m 755 examples/haproxy.init %{buildroot}%{_sysconfdir}/rc.d/init.d/%{name}
 %endif
 
 %if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
