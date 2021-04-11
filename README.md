@@ -19,7 +19,7 @@ Perform the following steps on a build box as a regular user.
     git checkout 2.1
 
 ## Build using makefile
-### Without Lua support
+### Basic building, no additional components
     make
 
 ### With Lua support
@@ -43,6 +43,7 @@ Resulting RPM will be in `/opt/rpm-haproxy/rpmbuild/RPMS/x86_64/`
     make run-docker
     
     Resulting RPMs will be in `./RPMS/`
+    When updating any of the files that are included in the build phase, ensure that you also bump the release number
 
 
 ## Credits
