@@ -4,7 +4,7 @@ LUA_VERSION=5.3.5
 USE_LUA?=0
 NO_SUDO?=0
 USE_PROMETHEUS?=0
-VERSION=$(shell wget -qO- http://git.haproxy.org/git/haproxy-${MAINVERSION}.git/refs/tags/ | sed -n 's:.*>\(.*\)</a>.*:\1:p' | sed 's/^.//' | sort -rV | head -1)
+VERSION=$(shell curl -s http://git.haproxy.org/git/haproxy-${MAINVERSION}.git/refs/tags/ | sed -n 's:.*>\(.*\)</a>.*:\1:p' | sed 's/^.//' | sort -rV | head -1)
 ifeq ("${VERSION}","./")
 		VERSION="${MAINVERSION}.0"
 endif
@@ -14,9 +14,9 @@ all: build
 
 install_prereq:
 ifeq ($(NO_SUDO),1)
-	yum install -y pcre-devel make gcc openssl-devel rpm-build systemd-devel wget sed zlib-devel
+	yum install -y pcre-devel make gcc openssl-devel rpm-build systemd-devel curl sed zlib-devel
 else
-	sudo yum install -y pcre-devel make gcc openssl-devel rpm-build systemd-devel wget sed zlib-devel
+	sudo yum install -y pcre-devel make gcc openssl-devel rpm-build systemd-devel curl sed zlib-devel
 endif
 
 clean:
@@ -26,11 +26,11 @@ clean:
 	rm -rf ./lua-${LUA_VERSION}*
 
 download-upstream:
-	wget http://www.haproxy.org/download/${MAINVERSION}/src/haproxy-${VERSION}.tar.gz -O ./SOURCES/haproxy-${VERSION}.tar.gz
+	curl -o  ./SOURCES/haproxy-${VERSION}.tar.gz http://www.haproxy.org/download/${MAINVERSION}/src/haproxy-${VERSION}.tar.gz
 
 build_lua:
 	sudo yum install -y readline-devel
-	wget https://www.lua.org/ftp/lua-${LUA_VERSION}.tar.gz
+	curl -O https://www.lua.org/ftp/lua-${LUA_VERSION}.tar.gz
 	tar xzf lua-${LUA_VERSION}.tar.gz
 	cd lua-${LUA_VERSION}
 	$(MAKE) -C lua-${LUA_VERSION} clean
