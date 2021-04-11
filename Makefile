@@ -8,7 +8,7 @@ VERSION=$(shell curl -s http://git.haproxy.org/git/haproxy-${MAINVERSION}.git/re
 ifeq ("${VERSION}","./")
 		VERSION="${MAINVERSION}.0"
 endif
-RELEASE=1
+RELEASE?=1
 
 all: build
 
@@ -57,6 +57,7 @@ build: $(build_stages)
 		--define "mainversion ${MAINVERSION}" \
 	--define "version ${VERSION}" \
 	--define "release ${RELEASE}" \
+	--define "_extra_cflags ${EXTRA_CFLAGS}" \
 	--define "_topdir %(pwd)/rpmbuild" \
 	--define "_builddir %{_topdir}/BUILD" \
 	--define "_buildroot %{_topdir}/BUILDROOT" \
