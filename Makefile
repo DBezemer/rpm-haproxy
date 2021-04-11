@@ -9,6 +9,7 @@ ifeq ("${VERSION}","./")
 		VERSION="${MAINVERSION}.0"
 endif
 RELEASE?=1
+EXTRA_CFLAGS?=0
 
 all: build
 
@@ -43,18 +44,20 @@ ifeq ($(USE_LUA),1)
 endif
 
 build-docker:
-	docker build -t haproxy-rpm-builder:latest -f Dockerfile .
+	docker build -t haproxy-rpm-builder7:${VERSION}-${RELEASE} -f Dockerfile7 .
+	docker build -t haproxy-rpm-builder8:${VERSION}-${RELEASE} -f Dockerfile8 .
 
 run-docker: build-docker
 	mkdir -p RPMS
 	chcon -Rt svirt_sandbox_file_t RPMS || true
-	docker run --volume $(HOME)/RPMS:/RPMS --rm haproxy-rpm-builder:latest
+	docker run --volume $(HOME)/RPMS:/RPMS --rm haproxy-rpm-builder7:${VERSION}-${RELEASE}
+	docker run --volume $(HOME)/RPMS:/RPMS --rm haproxy-rpm-builder8:${VERSION}-${RELEASE}
 
 build: $(build_stages)
 	cp -r ./SPECS/* ./rpmbuild/SPECS/ || true
 	cp -r ./SOURCES/* ./rpmbuild/SOURCES/ || true
 	rpmbuild -ba SPECS/haproxy.spec \
-		--define "mainversion ${MAINVERSION}" \
+	--define "mainversion ${MAINVERSION}" \
 	--define "version ${VERSION}" \
 	--define "release ${RELEASE}" \
 	--define "_extra_cflags ${EXTRA_CFLAGS}" \
