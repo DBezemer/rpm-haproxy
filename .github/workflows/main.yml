@@ -18,6 +18,7 @@ jobs:
       - uses: marvinpinto/action-automatic-releases@latest
         with:
           title: "WiP RPM Build"
+          automatic_release_tag: "WiP"
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           files: |
             RPMS/**/*.rpm
