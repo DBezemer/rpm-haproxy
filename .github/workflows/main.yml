@@ -10,11 +10,6 @@ jobs:
       - name: build
         run: |
           make run-docker
-#      - name: Upload RPMs
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: rpms
-#          path: RPMS/**/*
       - uses: marvinpinto/action-automatic-releases@latest
         with:
           title: "WiP RPM Build"
