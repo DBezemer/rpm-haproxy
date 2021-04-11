@@ -56,5 +56,6 @@ Based on the Red Hat 6.4 RPM spec for haproxy 1.4 combined with work done by
 - Version detect snippet by [@hiddenstream](https://github.com/hiddenstream)
 - Conditional Lua build support by [@Davasny](https://github.com/Davasny)
 - Conditional Prometheus support by [@mfilz](https://github.com/mfilz)
+- Debug Building and Dynamic Release version support by [@bugfood](https://github.com/bugfood)
 
 Additional logging inspired by https://www.percona.com/blog/2014/10/03/haproxy-give-me-some-logs-on-centos-6-5/
