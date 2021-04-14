@@ -1,4 +1,4 @@
-[![Github All Releases](https://img.shields.io/github/downloads/DBezemer/rpm-haproxy/total.svg)](https://github.com/DBezemer/rpm-haproxy/releases)
+[![Github All Releases](https://img.shields.io/github/downloads/DBezemer/rpm-haproxy/total.svg)](https://github.com/DBezemer/rpm-haproxy/releases) [![Build RPMs](https://github.com/DBezemer/rpm-haproxy/actions/workflows/main.yml/badge.svg)](https://github.com/DBezemer/rpm-haproxy/actions/workflows/main.yml)
 
 This repository contains some build artifacts of HAproxy that are provided with no support and no expectation of stability.
 The recommended way of using the repository is to build and test your own packages.
