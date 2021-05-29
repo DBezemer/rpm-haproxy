@@ -106,7 +106,7 @@ USE_LUA="USE_LUA=1"
 %endif
 
 %if 0%{_use_prometheus}
-USE_PROMETHEUS="EXTRA_OBJS=contrib/prometheus-exporter/service-prometheus.o"
+USE_PROMETHEUS="USE_PROMEX=1"
 %endif
 
 %if "%{_extra_cflags}" != "0"
@@ -115,13 +115,11 @@ USE_PROMETHEUS="EXTRA_OBJS=contrib/prometheus-exporter/service-prometheus.o"
 
 %{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} ${USE_LUA} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="$CFLAGS" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ${USE_PROMETHEUS} ADDLIB="%{__global_ldflags}"
 
-pushd contrib/halog
-%{__make} ${halog} OPTIMIZE="%{optflags} %{__global_ldflags}"
-popd
+%{__make} admin/halog/halog OPTIMIZE="%{optflags} %{__global_ldflags}"
 
-pushd contrib/iprange
-%{__make} iprange OPTIMIZE="%{optflags} %{__global_ldflags}"
-popd
+%{__make} admin/iprange/iprange OPTIMIZE="%{optflags} %{__global_ldflags}"
+
+%{__make} admin/iprange/ip6range OPTIMIZE="%{optflags} %{__global_ldflags}"
 
 %install
 [ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
@@ -144,8 +142,9 @@ popd
 %{__install} -c -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/rsyslog.d/49-%{name}.conf
 %{__install} -c -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 
-%{__install} -p -m 0755 ./contrib/halog/halog %{buildroot}%{_bindir}/halog
-%{__install} -p -m 0755 ./contrib/iprange/iprange %{buildroot}%{_bindir}/iprange
+%{__install} -p -m 0755 ./admin/halog/halog %{buildroot}%{_bindir}/halog
+%{__install} -p -m 0755 ./admin/iprange/iprange %{buildroot}%{_bindir}/iprange
+%{__install} -p -m 0755 ./admin/iprange/ip6range %{buildroot}%{_bindir}/ip6range
 %{__install} -p -D -m 0644 %{SOURCE5} %{buildroot}%{_mandir}/man1/halog.1
 
 %if 0%{?el6} || 0%{?amzn1}
