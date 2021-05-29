@@ -231,10 +231,10 @@ fi
 %endif
 
 %changelog
-* Sat May 5 2021 David Bezemer <info@davidbezemer.nl>
+* Sat May 30 2021 David Bezemer <info@davidbezemer.nl>
 - Add support for HAProxy 2.4.x
 
-* Sun Apr 12 2021 David Bezemer <info@davidbezemer.nl>
+* Sun Apr 11 2021 David Bezemer <info@davidbezemer.nl>
 - Add support for HAProxy 2.3.x
 
 * Sun Jul 12 2020 David Bezemer <info@davidbezemer.nl>
