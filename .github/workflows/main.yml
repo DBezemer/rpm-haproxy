@@ -3,7 +3,7 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "startsWith(github.event.head_commit.message, 'Build')"
+    if: "startsWith(github.event.head_commit.message, 'Build') || startsWith(github.event.head_commit.message, 'Release')"
     steps:
       - name: checkout
         uses: actions/checkout@v2
