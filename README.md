@@ -1,7 +1,7 @@
 [![Github All Releases](https://img.shields.io/github/downloads/DBezemer/rpm-haproxy/total.svg)](https://github.com/DBezemer/rpm-haproxy/releases) [![Build RPMs](https://github.com/DBezemer/rpm-haproxy/actions/workflows/main.yml/badge.svg)](https://github.com/DBezemer/rpm-haproxy/actions/workflows/main.yml)
 
 This repository contains build artifacts of HAproxy that are provided with no support and no expectation of stability.
-The recommended way of using the repository is to build and test your own packages.
+The recommended way of using the repository is to build and test your own packages. Latest Work-in-Progress builds can be found under release label "WiP RPM Build".
 
 # RPM Specs for HAproxy on CentOS / RHEL / Amazon Linux with syslog logging to separate output files
 
