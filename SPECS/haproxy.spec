@@ -220,6 +220,7 @@ fi
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/rsyslog.d/49-%{name}.conf
 %{_bindir}/halog
 %{_bindir}/iprange
+%{_bindir}/ip6range
 
 %if 0%{?el6} || 0%{?amzn1}
 %attr(0755,root,root) %config %_sysconfdir/rc.d/init.d/%{name}
