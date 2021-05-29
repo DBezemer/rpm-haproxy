@@ -1,9 +1,12 @@
 [![Github All Releases](https://img.shields.io/github/downloads/DBezemer/rpm-haproxy/total.svg)](https://github.com/DBezemer/rpm-haproxy/releases) [![Build RPMs](https://github.com/DBezemer/rpm-haproxy/actions/workflows/main.yml/badge.svg)](https://github.com/DBezemer/rpm-haproxy/actions/workflows/main.yml)
 
-This repository contains some build artifacts of HAproxy that are provided with no support and no expectation of stability.
+This repository contains build artifacts of HAproxy that are provided with no support and no expectation of stability.
 The recommended way of using the repository is to build and test your own packages.
 
-# RPM Specs for HAproxy on CentOS / RHEL / Amazon Linux with default syslog
+# RPM Specs for HAproxy on CentOS / RHEL / Amazon Linux with syslog logging to separate output files
+
+## Contributing
+When you like to see a specific feature added RPM build process, or support other RPM based Operating Systems please create a Pull Request if you have the knowledge to develop this yourself, I will verify the build process with these changes and merge in upstream when finished. If you don't have the knowledge feel free to create an Issue with the "enhancement" label added. There should be no expectation of when/if this will be added but will allow for tracking what features are of public interest.
 
 Perform the following steps on a build box as a regular user.
 
@@ -44,7 +47,6 @@ Resulting RPMs will be in `/opt/rpm-haproxy/rpmbuild/RPMS/x86_64/`
     
     Resulting RPMs will be in `./RPMS/`
     When updating any of the files that are included in the build phase, ensure that you also bump the release number
-
 
 ## Credits
 
