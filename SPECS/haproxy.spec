@@ -231,6 +231,9 @@ fi
 %endif
 
 %changelog
+* Thu Feb 10 2022 Kai Parry <tp@threadproc.io>
+- Add Docker support for Amazon Linux 2
+
 * Sat May 30 2021 David Bezemer <info@davidbezemer.nl>
 - Add support for HAProxy 2.4.x
 
