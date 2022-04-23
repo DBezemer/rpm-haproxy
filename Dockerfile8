@@ -1,5 +1,7 @@
 FROM centos:8
 
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* && \
+    sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*
 RUN yum install -y pcre-devel make gcc openssl-devel rpm-build systemd-devel curl sed zlib-devel
 RUN mkdir RPMS
 RUN chmod -R 777 RPMS
