@@ -231,7 +231,7 @@ fi
 %endif
 
 %changelog
-* Thu Feb 10 2022 Karsten Horsmann <khorsmann@gmail.com>
+* Thu Jul 07 2022 Karsten Horsmann <khorsmann@gmail.com>
 - Add Docker support for RHEL 9.0 / Almalinux 9.0
 
 * Thu Feb 10 2022 Kai Parry <tp@threadproc.io>
