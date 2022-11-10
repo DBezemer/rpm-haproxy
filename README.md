@@ -44,9 +44,10 @@ Resulting RPMs will be in `/opt/rpm-haproxy/rpmbuild/RPMS/x86_64/`
 
 ## Build using Docker
     make run-docker
-    
-    Resulting RPMs will be in `./RPMS/`
-    When updating any of the files that are included in the build phase, ensure that you also bump the release number
+
+Resulting RPMs will be in `./RPMS/`
+When updating any of the files that are included in the build phase, ensure that you also bump the release number, like so:
+    make USE_PROMETHEUS=1 RELEASE=3 run-docker
 
 ## Credits
 
