@@ -9,4 +9,4 @@ COPY Makefile Makefile
 COPY SPECS/haproxy.spec SPECS/haproxy.spec
 COPY SOURCES/* SOURCES/
 
-CMD make NO_SUDO=1 USE_PROMETHEUS=${USE_PROMETHEUS:-0} RELEASE=${RELEASE:-1} && cp /rpmbuild/RPMS/x86_64/* /RPMS && cp /rpmbuild/SRPMS/* /RPMS
+CMD make NO_SUDO=1 USE_PROMETHEUS=${WITH_PROMETHEUS:-0} RELEASE=${RELEASE:-1} && cp /rpmbuild/RPMS/x86_64/* /RPMS && cp /rpmbuild/SRPMS/* /RPMS
