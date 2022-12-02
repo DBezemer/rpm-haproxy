@@ -2,3 +2,4 @@ SOURCES/haproxy-*.tar.gz
 rpmbuild
 RPMS
 lua-*
+.docker
