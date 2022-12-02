@@ -46,6 +46,7 @@ endif
 build-docker:
 	docker build -t haproxy-rpm-builder7:${VERSION}-${RELEASE} -f Dockerfile7 .
 	docker build -t haproxy-rpm-builder8:${VERSION}-${RELEASE} -f Dockerfile8 .
+	docker build -t haproxy-rpm-builder9:${VERSION}-${RELEASE} -f Dockerfile9 .
 	docker build -t haproxy-rpm-builder-amzn2:${VERSION}-${RELEASE} -f Dockerfile-amzn2 .
 
 run-docker: build-docker
@@ -53,6 +54,7 @@ run-docker: build-docker
 	chcon -Rt svirt_sandbox_file_t RPMS || true
 	docker run --volume $(HOME)/RPMS:/RPMS --rm -e USE_PROMETHEUS=${USE_PROMETHEUS} -e RELEASE=${RELEASE} haproxy-rpm-builder7:${VERSION}-${RELEASE}
 	docker run --volume $(HOME)/RPMS:/RPMS --rm -e USE_PROMETHEUS=${USE_PROMETHEUS} -e RELEASE=${RELEASE} haproxy-rpm-builder8:${VERSION}-${RELEASE}
+  docker run --volume $(HOME)/RPMS:/RPMS --rm -e USE_PROMETHEUS=${USE_PROMETHEUS} -e RELEASE=${RELEASE} haproxy-rpm-builder9:${VERSION}-${RELEASE}
 	docker run --volume $(HOME)/RPMS:/RPMS --rm -e USE_PROMETHEUS=${USE_PROMETHEUS} -e RELEASE=${RELEASE} haproxy-rpm-builder-amzn2:${VERSION}-${RELEASE}
 
 build: $(build_stages)
