@@ -15,9 +15,9 @@ all: build
 
 install_prereq:
 ifeq ($(NO_SUDO),1)
-	yum install -y pcre-devel make gcc openssl-devel rpm-build systemd-devel curl sed zlib-devel
+	yum install -y pcre-devel make gcc openssl11-devel rpm-build systemd-devel curl sed zlib-devel
 else
-	sudo yum install -y pcre-devel make gcc openssl-devel rpm-build systemd-devel curl sed zlib-devel
+	sudo yum install -y pcre-devel make gcc openssl11-devel rpm-build systemd-devel curl sed zlib-devel
 endif
 
 clean:

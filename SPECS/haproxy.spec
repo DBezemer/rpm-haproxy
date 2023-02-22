@@ -34,8 +34,8 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: pcre-devel
 BuildRequires: zlib-devel
 BuildRequires: make
-BuildRequires: gcc openssl-devel
-BuildRequires: openssl-devel
+BuildRequires: gcc openssl11-devel
+BuildRequires: openssl11-devel
 
 Requires(pre):      shadow-utils
 Requires:           rsyslog
