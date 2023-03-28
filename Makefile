@@ -10,15 +10,19 @@ ifeq ("${VERSION}","./")
 endif
 RELEASE?=1
 EXTRA_CFLAGS?=0
+PREREQ:=pcre-devel make gcc openssl-devel rpm-build systemd-devel curl sed zlib-devel
+ifeq ($(NO_SUDO),1)
+	SUDO=
+else
+	SUDO=sudo
+endif
 
 all: build
 
 install_prereq:
-ifeq ($(NO_SUDO),1)
-	yum install -y pcre-devel make gcc openssl-devel rpm-build systemd-devel curl sed zlib-devel
-else
-	sudo yum install -y pcre-devel make gcc openssl-devel rpm-build systemd-devel curl sed zlib-devel
-endif
+	# Check if the prereqs are there before trying to sudo
+	rpm -q $(PREREQ) || \
+		$(SUDO) yum install -y $(PREREQ)
 
 clean:
 	rm -f ./SOURCES/haproxy-${VERSION}.tar.gz
