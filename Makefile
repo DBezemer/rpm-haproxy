@@ -30,13 +30,25 @@ download-upstream:
 	curl -o  ./SOURCES/haproxy-${VERSION}.tar.gz http://www.haproxy.org/download/${MAINVERSION}/src/haproxy-${VERSION}.tar.gz
 
 build_lua:
+ifeq ($(NO_SUDO),1)
+	yum install -y readline-devel
+else
 	sudo yum install -y readline-devel
+endif
 	curl -O https://www.lua.org/ftp/lua-${LUA_VERSION}.tar.gz
 	tar xzf lua-${LUA_VERSION}.tar.gz
 	cd lua-${LUA_VERSION}
 	$(MAKE) -C lua-${LUA_VERSION} clean
+ifeq ($(NO_SUDO),1)
 	$(MAKE) -C lua-${LUA_VERSION} MYCFLAGS=-fPIC linux test  # MYCFLAGS=-fPIC is required during linux ld
+else
+	sudo $(MAKE) -C lua-${LUA_VERSION} MYCFLAGS=-fPIC linux test  # MYCFLAGS=-fPIC is required during linux ld
+endif
+ifeq ($(NO_SUDO),1)
 	$(MAKE) -C lua-${LUA_VERSION} install
+else
+	sudo $(MAKE) -C lua-${LUA_VERSION} install
+endif
 
 build_stages := install_prereq clean download-upstream
 ifeq ($(USE_LUA),1)
