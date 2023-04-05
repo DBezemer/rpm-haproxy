@@ -1,4 +1,4 @@
-FROM almalinux:9.0
+FROM amazonlinux:2023
 
 RUN dnf install --allowerasing -y pcre-devel make gcc openssl-devel rpm-build systemd-devel curl sed zlib-devel
 RUN mkdir RPMS
