@@ -41,12 +41,9 @@ endif
 	$(MAKE) -C lua-${LUA_VERSION} clean
 ifeq ($(NO_SUDO),1)
 	$(MAKE) -C lua-${LUA_VERSION} MYCFLAGS=-fPIC linux test  # MYCFLAGS=-fPIC is required during linux ld
-else
-	sudo $(MAKE) -C lua-${LUA_VERSION} MYCFLAGS=-fPIC linux test  # MYCFLAGS=-fPIC is required during linux ld
-endif
-ifeq ($(NO_SUDO),1)
 	$(MAKE) -C lua-${LUA_VERSION} install
 else
+	sudo $(MAKE) -C lua-${LUA_VERSION} MYCFLAGS=-fPIC linux test  # MYCFLAGS=-fPIC is required during linux ld
 	sudo $(MAKE) -C lua-${LUA_VERSION} install
 endif
 
