@@ -232,7 +232,7 @@ fi
 
 %changelog
 * Tue Jul 25 2023 J. Casalino <casalino@adobe.com>
-- Add support for HAProxy 2.6.x
+- Make MAINVERSION a conditional variable so it can also be overridden by commandline like USE_LUA and NO_SUDO
 
 * Thu Jul 07 2022 Karsten Horsmann <khorsmann@gmail.com>
 - Add Docker support for RHEL 9.0 / Almalinux 9.0
