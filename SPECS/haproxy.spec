@@ -231,13 +231,16 @@ fi
 %endif
 
 %changelog
+* Tue Feb 25 2020 J. Casalino <casalino@adobe.com>
+- Add support for HAProxy 2.6.x
+
 * Thu Jul 07 2022 Karsten Horsmann <khorsmann@gmail.com>
 - Add Docker support for RHEL 9.0 / Almalinux 9.0
 
 * Thu Feb 10 2022 Kai Parry <tp@threadproc.io>
 - Add Docker support for Amazon Linux 2
 
-* Sat May 30 2021 David Bezemer <info@davidbezemer.nl>
+* Sun May 30 2021 David Bezemer <info@davidbezemer.nl>
 - Add support for HAProxy 2.4.x
 
 * Sun Apr 11 2021 David Bezemer <info@davidbezemer.nl>
