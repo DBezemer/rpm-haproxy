@@ -61,5 +61,7 @@ Based on the Red Hat 6.4 RPM spec for haproxy 1.4 combined with work done by
 - Conditional Lua build support by [@Davasny](https://github.com/Davasny)
 - Conditional Prometheus support by [@mfilz](https://github.com/mfilz)
 - Debug Building and Dynamic Release version support by [@bugfood](https://github.com/bugfood)
+- Macrofication of SUDO option by [@kenstir](https://github.com/kenstir)
+- Amazon Linux 2023 support by [@izzyleung](https://github.com/izzyleung)
 
 Additional logging inspired by https://www.percona.com/blog/2014/10/03/haproxy-give-me-some-logs-on-centos-6-5/
