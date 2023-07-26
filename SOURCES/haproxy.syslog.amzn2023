@@ -1,0 +1,13 @@
+$ModLoad imudp
+$UDPServerAddress 127.0.0.1
+$UDPServerRun 514
+$MaxMessageSize 64k
+$FileCreateMode 0600
+
+$template HAProxy,"%TIMESTAMP% %syslogseverity-text:::UPPERCASE%: %msg%\n"
+$template HAProxyAccess,"%msg%\n"
+
+local2.=info     /var/log/haproxy/access.log;HAProxyAccess
+local2.error    /var/log/haproxy/error.log;HAProxy
+local2.* /var/log/haproxy/status.log
+& ~

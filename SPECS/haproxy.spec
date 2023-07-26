@@ -54,6 +54,13 @@ Requires(preun):    systemd
 Requires(postun):   systemd
 %endif
 
+%if 0%{?amzn2023}
+BuildRequires:      systemd-devel
+Requires(post):     systemd
+Requires(preun):    systemd
+Requires(postun):   systemd
+%endif
+
 %description
 HA-Proxy is a TCP/HTTP reverse proxy which is particularly suited for high
 availability environments. Indeed, it can:
@@ -91,12 +98,12 @@ CFLAGS="%{optflags}"
 USE_TFO=
 USE_NS=
 
-%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?amzn2023} || 0%{?el8}
 systemd_opts="USE_SYSTEMD=1"
 pcre_opts="USE_PCRE=1 USE_PCRE_JIT=1"
 %endif
 
-%if 0%{?el7} || 0%{?amzn2} || 0%{?amzn1} || 0%{?el8}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?amzn2023} || 0%{?amzn1} || 0%{?el8}
 USE_TFO=1
 USE_NS=1
 %endif
@@ -153,7 +160,7 @@ popd
 %{__install} -c -m 755 %{SOURCE2} %{buildroot}%{_sysconfdir}/rc.d/init.d/%{name}
 %endif
 
-%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?amzn2023} || 0%{?el8}
 %{__install} -s %{name} %{buildroot}%{_sbindir}/
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
 %endif
@@ -170,7 +177,7 @@ getent passwd %{haproxy_user} >/dev/null || \
 exit 0
 
 %post
-%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?amzn2023} || 0%{?el8}
 %systemd_post %{name}.service
 systemctl reload-or-try-restart rsyslog.service
 %endif
@@ -181,7 +188,7 @@ systemctl reload-or-try-restart rsyslog.service
 %endif
 
 %preun
-%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?amzn2023} || 0%{?el8}
 %systemd_preun %{name}.service
 %endif
 
@@ -193,7 +200,7 @@ fi
 %endif
 
 %postun
-%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?amzn2023} || 0%{?el8}
 %systemd_postun_with_restart %{name}.service
 systemctl reload-or-try-restart rsyslog.service
 %endif
@@ -208,7 +215,7 @@ fi
 %files
 %defattr(-,root,root)
 %doc CHANGELOG README examples/*.cfg doc/architecture.txt doc/configuration.txt doc/intro.txt doc/management.txt doc/proxy-protocol.txt
-%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?amzn2023} || 0%{?el8}
     %license LICENSE
 %endif
 %doc %{_mandir}/man1/*
@@ -226,11 +233,14 @@ fi
 %attr(0755,root,root) %config %_sysconfdir/rc.d/init.d/%{name}
 %endif
 
-%if 0%{?el7} || 0%{?amzn2} || 0%{?el8}
+%if 0%{?el7} || 0%{?amzn2} || 0%{?amzn2023} || 0%{?el8}
 %attr(-,root,root) %{_unitdir}/%{name}.service
 %endif
 
 %changelog
+* Sun Apr 9 2023 Xiao Liang <izzyliang@gmail.com>
+- Add support for Amazon Linux 2023
+
 * Sun Jul 12 2020 David Bezemer <info@davidbezemer.nl>
 - Backwards compatible conditional restart using reload-or-try-restart
 
