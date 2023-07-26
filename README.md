@@ -17,20 +17,23 @@ Perform the following steps on a build box as a regular user.
 ## Checkout this repository
 
     cd /opt
-    git clone https://github.com/DBezemer/rpm-haproxy.git 
+    git clone https://github.com/DBezemer/rpm-haproxy.git
     cd ./rpm-haproxy
-    git checkout 2.1
+    git checkout dev
 
-## Build using makefile
+## Build using makefile and latest point release of haproxy
 ### Basic building, no additional components
     make
 
+### Build forcing minor version 2.6 of haproxy, no additional components. Any valid release version can be specified.
+    make MAINVERSION=2.6
+
 ### With Lua support
     make USE_LUA=1
-    
+
 ### With Prometheus Module support
     make USE_PROMETHEUS=1
-    
+
 ### Without sudo for yum (for building in Docker)
     make NO_SUDO=1
 
@@ -51,9 +54,9 @@ When updating any of the files that are included in the build phase, ensure that
 
 ## Credits
 
-Based on the Red Hat 6.4 RPM spec for haproxy 1.4 combined with work done by 
+Based on the Red Hat 6.4 RPM spec for haproxy 1.4 combined with work done by
 - [@nmilford](https://www.github.com/nmilford)
-- [@resmo](https://www.github.com/resmo) 
+- [@resmo](https://www.github.com/resmo)
 - [@kevholmes](https://www.github.com/kevholmes)
 - Update to 1.8 contributed by [@khdevel](https://github.com/khdevel)
 - Amazon Linux support contributed by [@thedoc31](https://github.com/thedoc31) and [@jazzl0ver](https://github.com/jazzl0ver)
