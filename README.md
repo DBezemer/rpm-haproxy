@@ -31,6 +31,9 @@ Perform the following steps on a build box as a regular user.
 ### With Lua support
     make USE_LUA=1
 
+#### With custom Lua version
+    make USE_LUA=1 LUA_VERSION=5.4.6
+
 ### With Prometheus Module support
     make USE_PROMETHEUS=1
 
