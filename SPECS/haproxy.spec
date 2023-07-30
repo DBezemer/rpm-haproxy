@@ -238,6 +238,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 25 2023 J. Casalino <casalino@adobe.com>
+- Make MAINVERSION a conditional variable so it can also be overridden by commandline like USE_LUA and NO_SUDO
+
 * Wed Apr 5 2023 Xiao Liang <izzyliang@gmail.com>
 - Add support for Amazon Linux 2023
 

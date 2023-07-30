@@ -1,8 +1,8 @@
 HOME=$(shell pwd)
-MAINVERSION=2.4
+MAINVERSION?=2.4
 NO_SUDO?=0
 USE_PODMAN?=0
-LUA_VERSION=5.4.3
+LUA_VERSION?=5.4.3
 USE_LUA?=0
 USE_PROMETHEUS?=0
 VERSION=$(shell curl -s http://git.haproxy.org/git/haproxy-${MAINVERSION}.git/refs/tags/ | sed -n 's:.*>\(.*\)</a>.*:\1:p' | sed 's/^.//' | sort -rV | head -1)
