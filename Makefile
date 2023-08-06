@@ -5,6 +5,7 @@ USE_PODMAN?=0
 LUA_VERSION?=5.4.3
 USE_LUA?=0
 USE_PROMETHEUS?=0
+CPU?=0
 VERSION=$(shell curl -s http://git.haproxy.org/git/haproxy-${MAINVERSION}.git/refs/tags/ | sed -n 's:.*>\(.*\)</a>.*:\1:p' | sed 's/^.//' | sort -rV | head -1)
 ifeq ("${VERSION}","./")
 		VERSION="${MAINVERSION}.0"
@@ -17,6 +18,16 @@ ifeq ($(NO_SUDO),1)
 else
 	SUDO=sudo
 endif
+
+HAS_DNF:=$(shell command -v dnf 2> /dev/null)
+ifndef HAS_DNF
+	PACKAGE_MANAGER=yum
+	INSTALL_FLAGS=-y
+else
+	PACKAGE_MANAGER=dnf
+	INSTALL_FLAGS=-y --allowerasing
+endif
+
 ifeq ($(USE_PODMAN),1)
 	CONTAINER_RUNTIME=podman
 else
@@ -28,7 +39,7 @@ all: build
 install_prereq:
 	# Check if the prereqs are there before trying to sudo
 	rpm -q $(PREREQ) || \
-		$(SUDO) yum install -y $(PREREQ)
+		$(SUDO) $(PACKAGE_MANAGER) install $(INSTALL_FLAGS) $(PREREQ)
 
 clean:
 	rm -f ./SOURCES/haproxy-${VERSION}.tar.gz
@@ -76,6 +87,7 @@ build: $(build_stages)
 	--define "mainversion ${MAINVERSION}" \
 	--define "version ${VERSION}" \
 	--define "release ${RELEASE}" \
+	--define "_cpu ${CPU}" \
 	--define "_extra_cflags ${EXTRA_CFLAGS}" \
 	--define "_topdir %(pwd)/rpmbuild" \
 	--define "_builddir %{_topdir}/BUILD" \
