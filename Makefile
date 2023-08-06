@@ -20,12 +20,12 @@ else
 endif
 
 HAS_DNF:=$(shell command -v dnf 2> /dev/null)
-ifndef HAS_DNF
-	PACKAGE_MANAGER=yum
-	INSTALL_FLAGS=-y
-else
+ifdef HAS_DNF
 	PACKAGE_MANAGER=dnf
 	INSTALL_FLAGS=-y --allowerasing
+else
+	PACKAGE_MANAGER=yum
+	INSTALL_FLAGS=-y
 endif
 
 ifeq ($(USE_PODMAN),1)
