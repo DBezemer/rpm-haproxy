@@ -120,7 +120,12 @@ USE_PROMEX="USE_PROMEX=1"
   CFLAGS="$CFLAGS %{_extra_cflags}"
 %endif
 
-%{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} ${USE_LUA} CPU="generic" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="$CFLAGS" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ${USE_PROMEX} ADDLIB="%{__global_ldflags}"
+CPU="generic"
+%if "%{_cpu}" != "0"
+  CPU="%{_cpu}"
+%endif
+
+%{__make} -j$RPM_BUILD_NCPUS %{?_smp_mflags} ${USE_LUA} CPU="${CPU}" TARGET="linux-glibc" ${systemd_opts} ${pcre_opts} USE_OPENSSL=1 USE_ZLIB=1 ${regparm_opts} ADDINC="$CFLAGS" USE_LINUX_TPROXY=1 USE_THREAD=1 USE_TFO=${USE_TFO} USE_NS=${USE_NS} ${USE_PROMEX} ADDLIB="%{__global_ldflags}"
 
 %{__make} admin/halog/halog OPTIMIZE="%{optflags} %{__global_ldflags}"
 
