@@ -37,13 +37,16 @@ Perform the following steps on a build box as a regular user.
 ### With Prometheus Module support
     make USE_PROMETHEUS=1
 
-### Without sudo for yum (for building in Docker)
+### Without `sudo` for `yum` (for building in Docker)
     make NO_SUDO=1
 
 ### With a custom release iteration, e.g. '2' (default '1'):
     make RELEASE=2
 
-### Custom CFLAGS, e.g. '-O0' to disable optimization for debug:
+### With a custom target `CPU`, e.g. `armv81`
+    make CPU=armv81
+
+### Custom `CFLAGS`, e.g. '-O0' to disable optimization for debug:
     make EXTRA_CFLAGS=-O0
 
 Resulting RPMs will be in `/opt/rpm-haproxy/rpmbuild/RPMS/x86_64/`
