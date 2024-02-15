@@ -31,7 +31,7 @@ install_prereq:
 		$(SUDO) yum install -y $(PREREQ)
 
 clean:
-	rm -f ./SOURCES/haproxy-${VERSION}.tar.gz
+	rm -f ./SOURCES/haproxy-*.tar.gz
 	rm -rf ./rpmbuild
 	mkdir -p ./rpmbuild/SPECS/ ./rpmbuild/SOURCES/ ./rpmbuild/RPMS/ ./rpmbuild/SRPMS/
 	rm -rf ./lua-${LUA_VERSION}*
